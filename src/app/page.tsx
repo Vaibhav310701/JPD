@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 export default function Home() {
   const [activeButton, setActiveButton] = useState("Rent");
   return (
-    <div className="h-full w-full ">
+    <div className="sm:h-full w-full ">
       <div className="h-[54px] w-full border-b border-[#E0DEF7]">
         <Navbar />
       </div>
@@ -22,8 +22,8 @@ export default function Home() {
 
         {/* Left Content */}
         <div className="h-3/4  lg:h-full w-full flex justify-center items-center pt-6 z-10">
-          <div className="flex flex-col items-center md:items-center lg:items-start gap-3 w-[80%] lg:w-[70%] md:[85%] m-auto">
-            <p className="text-[#000929] text-4xl  text-wrap text-center md:text-left lg:text-left font-semibold  ">
+          <div className="flex flex-col items-center md:items-center lg:items-start gap-8 w-[80%] lg:w-[70%] md:[85%] m-auto">
+            <p className="text-[#000929] text-6xl  text-wrap text-center md:text-left lg:text-left font-semibold  ">
               Buy, rent, or sell <br /> properties in
               <br /> <span className="text-[#F848C7]">Jaipur</span>
             </p>
