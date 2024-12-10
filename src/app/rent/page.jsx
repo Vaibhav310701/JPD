@@ -401,7 +401,7 @@ export default function page() {
                   />
                 </div>
 
-                <div className="w-full flex flex-col">
+                <div className="w-full flex flex-col justify-evenly">
                   <div className="w-full flex flex-col md:flex-row lg:flex-row items-start justify-between">
                     <p className="text-[#000929] font-semibold text-[20px]">
                       {item.title}
@@ -419,9 +419,15 @@ export default function page() {
                       />
                     </div>
                   </div>
-                  <div>
+                  <div className="flex flex-wrap justify-start items-center gap-2">
                     <p className="text-[#7065F0] font-bold text-[18px]">
                       {item.price}
+                    </p>
+                    <p className="font-semibold text-[18px] border-x px-2 text-[#7F8393]">
+                      3 BHK
+                    </p>
+                    <p className="font-semibold text-[18px] text-[#7F8393]">
+                    2200 sqft
                     </p>
                   </div>
                   <p className="flex justify-start items-center gap-2 pt-1 underline">
