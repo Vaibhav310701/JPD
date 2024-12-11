@@ -28,13 +28,13 @@ export default function Home() {
       ></div>
       {/* Left Content */}
       <div className="h-3/4  lg:h-full w-full flex justify-center items-center pt-6 z-10">
-        <div className="flex flex-col items-center md:items-center lg:items-start gap-8 w-[80%] lg:w-[70%] md:[85%] m-auto">
-          <p className="text-[#000929] text-6xl  text-wrap text-center md:text-left lg:text-left font-semibold  ">
-            Buy, rent, or sell <br /> properties in
+        <div className="flex flex-col items-center md:items-center lg:items-start gap-6 w-[80%] lg:w-[75%] md:[85%] m-auto">
+          <p className="text-[#000929] text-6xl  text-wrap text-center leading-tight md:text-left lg:text-left font-semibold  ">
+            Buy, rent or sell <br /> properties in
             <br /> <span className="text-[#F848C7]">Jaipur</span>
           </p>
           <p className="font-medium w-[80%] text-wrap text-center md:text-left lg:text-left">
-            A great platform to buy, sell, or even rent your properties without
+            A great platform to buy, sell or even rent your properties without
             any commisions.
           </p>
           <div className="pt-8">
