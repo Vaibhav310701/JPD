@@ -6,10 +6,9 @@ export default function Navbar() {
       <div className="px-4">
         <p className="text-xl font-bold">JDP</p>
       </div>
-      <div className="flex justify-end items-center pr-4 gap-2 text-lg font-semibold">
-        <p className="px-4 py-2">Buy</p>
-        <p className="px-4 py-2"> Rent</p>
-        <p className="px-4 py-2">Sale</p>
+      <div className="flex justify-end gap-4 items-center pr-2  text-sm  lg:text-md md:text-md font-medium">
+        <button className="underline">My Listings</button>
+        <button className="bg-[#7065F0] hover:bg-[#5a4cf3] px-2 py-2 text-white rounded-md">ListYourSpace</button>
       </div>
     </div>
   );

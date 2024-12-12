@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 export default function page() {
-  const [activeButton, setActiveButton] = useState("Rent");
+  const [activeButton, setActiveButton] = useState("All");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [searchInput, setSearchInput] = useState("");
@@ -253,23 +253,20 @@ export default function page() {
 
     setIsBudgetOpen(true);
   };
-  
+
   return (
-    <div className="h-full w-full flex flex-col p-2">
+    <div className="h-full w-full flex flex-col">
       {/* Filters */}
-      <div className="h-full md:h-[100px] lg:h-[100px] grid w-full gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+      <div className="h-full md:h-[64px] lg:h-[64px] flex-wrap  bg-[#7065F0] flex gap-2 px-4 py-2 items-center justify-start">
         <div
-          className="flex flex-col gap-1 bg-white p-2 rounded-md relative"
+          className="h-[38px] w-40  flex flex-col items-center justify-center px-2 py-2 bg-white  rounded-md relative"
           style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
         >
-          <label className="text-[#4d5c5e] font-semibold text-[0.875rem]">
-            Location
-          </label>
-          <div className="flex items-center border-b-2 border-[#E0DEF7]">
+          <div className="w-fit flex">
             <input
-              className="outline-none flex-1 py-1 text-[#000929] text-[16px] font-semibold"
+              className="outline-none w-[70%] flex-1 text-[#000929] text-[14px] font-semibold"
               type="text"
-              placeholder="Search Location..."
+              placeholder="Location..."
               value={searchInput}
               onChange={(e) => {
                 setSearchInput(e.target.value);
@@ -299,15 +296,94 @@ export default function page() {
           )}
         </div>
         <div
-          className="flex flex-col gap-1 bg-white p-2 rounded-md relative"
+          className="h-[38px] w-40  flex flex-col items-center justify-center gap-1 bg-white p-2 rounded-md relative"
           style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
         >
-          <label className="text-[#4d5c5e] font-semibold text-[14px]">
-            Budget
-          </label>
-          <div className="flex items-center border-b-2 border-[#E0DEF7]">
+          <div className="flex items-center">
             <input
-              className="outline-none flex-1 py-1 text-[#000929] text-[16px] font-semibold"
+              className="outline-none w-[70%] flex-1 py-1 text-[#000929] text-[14px] font-semibold"
+              type="text"
+              placeholder="Search Budget"
+              value={budgetSearchInput}
+              onChange={handleBudgetSearchChange}
+            />
+            <img
+              src="/assets/icons/arrowDown.svg"
+              className={`transform transition-transform duration-300 cursor-pointer ${
+                isBudgetOpen ? "rotate-180" : "rotate-0"
+              }`}
+              onClick={() => setIsBudgetOpen(!isBudgetOpen)}
+            />
+          </div>
+          {isBudgetOpen && filteredBudgetOptions.length > 0 && (
+            <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
+              {filteredBudgetOptions.map((option, index) => (
+                <li
+                  key={index}
+                  className={`px-2 py-1 ${
+                    option === "No Results Found"
+                      ? "text-[#a0a0a0] cursor-default"
+                      : "hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
+                  }`}
+                  onClick={() =>
+                    option !== "No Results Found" &&
+                    handleBudgetOptionClick(option)
+                  }
+                >
+                  {option}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div
+          className="h-[38px] w-40  flex flex-col items-center justify-center gap-1 bg-white p-2 rounded-md relative"
+          style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
+        >
+          <div className="flex items-center">
+            <input
+              className="outline-none w-[70%] flex-1 py-1 text-[#000929] text-[14px] font-semibold"
+              type="text"
+              placeholder="Search Budget"
+              value={budgetSearchInput}
+              onChange={handleBudgetSearchChange}
+            />
+            <img
+              src="/assets/icons/arrowDown.svg"
+              className={`transform transition-transform duration-300 cursor-pointer ${
+                isBudgetOpen ? "rotate-180" : "rotate-0"
+              }`}
+              onClick={() => setIsBudgetOpen(!isBudgetOpen)}
+            />
+          </div>
+          {isBudgetOpen && filteredBudgetOptions.length > 0 && (
+            <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
+              {filteredBudgetOptions.map((option, index) => (
+                <li
+                  key={index}
+                  className={`px-2 py-1 ${
+                    option === "No Results Found"
+                      ? "text-[#a0a0a0] cursor-default"
+                      : "hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
+                  }`}
+                  onClick={() =>
+                    option !== "No Results Found" &&
+                    handleBudgetOptionClick(option)
+                  }
+                >
+                  {option}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div
+          className="h-[38px] w-40  flex flex-col items-center justify-center gap-1 bg-white p-2 rounded-md relative"
+          style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
+        >
+          <div className="flex items-center">
+            <input
+              className="outline-none w-[70%] flex-1 py-1 text-[#000929] text-[14px] font-semibold"
               type="text"
               placeholder="Search Budget"
               value={budgetSearchInput}
@@ -344,38 +420,48 @@ export default function page() {
         </div>
       </div>
       {/* Tabs Section */}
-      <div className="h-[calc(100%-100px)]  w-full pt-4">
+      <div className="h-[calc(100%-68px)]  w-full p-2 overflow-auto">
         <div className="w-full border-b-2 border-[#E0DEF7] flex justify-between flex-wrap items-center">
           <div>
             <button
-              className={` px-6 py-2 font-semibold rounded-tl-md ${
-                activeButton === "Top"
+              className={`px-6 py-2 font-semibold rounded-tl-md ${
+                activeButton === "All"
                   ? "bg-[#E9E8FF] text-[#7065F0] border-b-2 border-[#7065F0]"
                   : "bg-white text-black border-b-2 border-[#E0DEF7]"
               }`}
-              onClick={() => setActiveButton("Top")}
+              onClick={() => setActiveButton("All")}
             >
-              Top
+              All
             </button>
             <button
               className={`px-6 py-2 font-semibold  ${
-                activeButton === "Rent"
+                activeButton === "Residential"
                   ? "bg-[#E9E8FF] text-[#7065F0] border-b-2 border-[#7065F0]"
                   : "bg-white text-black border-b-2 border-[#E0DEF7]"
               }`}
-              onClick={() => setActiveButton("Rent")}
+              onClick={() => setActiveButton("Residential")}
             >
-              Rent
+              Residential
             </button>
             <button
               className={`px-6 py-2 font-semibold rounded-tr-md ${
-                activeButton === "Buy"
+                activeButton === "Commercial"
                   ? "bg-[#E9E8FF] text-[#7065F0] border-b-2 border-[#7065F0]"
                   : "bg-white text-black border-b-2 border-[#E0DEF7] "
               }`}
-              onClick={() => setActiveButton("Buy")}
+              onClick={() => setActiveButton("Commercial")}
             >
-              Buy
+              Commercial
+            </button>
+            <button
+              className={`px-6 py-2 font-semibold  ${
+                activeButton === "Agriculture"
+                  ? "bg-[#E9E8FF] text-[#7065F0] border-b-2 border-[#7065F0]"
+                  : "bg-white text-black border-b-2 border-[#E0DEF7]"
+              }`}
+              onClick={() => setActiveButton("Agriculture")}
+            >
+              Agriculture
             </button>
           </div>
           <div className="bg-white px-4 py-2 rounded-t-md flex items-center justify-between gap-6">
@@ -385,9 +471,9 @@ export default function page() {
             <img src="/assets/icons/arrowDown.svg" />
           </div>
         </div>
-        <div className="h-[calc(100%-42px)] w-full flex flex-col md:flex-row lg:flex-row gap-2 p-2">
+        <div className="h-[calc(100%-42px)] w-full flex flex-col md:flex-row lg:flex-row gap-2 ">
           {/* List */}
-          <div className="w-full md:w-[calc(100%-292px)] lg:md:w-[calc(100%-292px)] flex flex-col gap-2 h-full overflow-auto">
+          <div className="w-full md:w-[calc(100%-292px)] p-2 lg:md:w-[calc(100%-292px)] flex flex-col gap-2 h-full ">
             {data.map((item) => (
               <div
                 key={item.id}
@@ -396,7 +482,7 @@ export default function page() {
                 <div>
                   <img
                     src={item.image}
-                    className="md:w-60 lg:w-60 h-[212px] w-full"
+                    className="md:w-64 lg:w-64 h-[212px] w-full rounded-md"
                     alt="property"
                   />
                 </div>
@@ -427,7 +513,7 @@ export default function page() {
                       3 BHK
                     </p>
                     <p className="font-semibold text-[18px] text-[#7F8393]">
-                    2200 sqft
+                      2200 sqft
                     </p>
                   </div>
                   <p className="flex justify-start items-center gap-2 pt-1 underline">
@@ -459,6 +545,21 @@ export default function page() {
                         </span>
                         {item.phone}
                       </p>
+                      {/* {item.buttons.map((button, index) => (
+                        <p
+                          key={index}
+                          className="flex justify-start items-center gap-2 px-2 py-1 rounded-md"
+                          style={{
+                            backgroundColor: button.background,
+                            color: button.color,
+                          }}
+                        >
+                          <span>
+                            <img src={button.icon} alt={button.label} />
+                          </span>
+                          {button.label}
+                        </p>
+                      ))} */}
                       {item.buttons.map((button, index) => (
                         <p
                           key={index}
@@ -466,6 +567,16 @@ export default function page() {
                           style={{
                             backgroundColor: button.background,
                             color: button.color,
+                          }}
+                          onClick={() => {
+                            if (button.label.toLowerCase() === "whatsapp") {
+                              const phoneNumber = "9588205114"; // Replace with desired number
+                              const message = "Hello! I want to connect."; // Customize message
+                              const url = `https://wa.me/${item.phone}?text=${encodeURIComponent(
+                                message
+                              )}`;
+                              window.open(url, "_blank");
+                            }
                           }}
                         >
                           <span>
@@ -482,8 +593,15 @@ export default function page() {
             ))}
           </div>
           {/* Banner List */}
-          <div className="w-full md:w-[300px] lg:w-[300px] h-full p-2 bg-white rounded-md">
-            <img src="/assets/images/addImage.png" className="w-full" />
+          <div className="w-full md:w-[300px] lg:w-[300px] h-full pt-2 rounded-md">
+            <div className="h-fit w-full bg-[white] flex flex-col gap-2 p-2 rounded-md">
+              <img src="/assets/images/addImage.png" className="w-full  " />
+              <img src="/assets/images/addImage.png" className="w-full" />
+              <img src="/assets/images/addImage.png" className="w-full" />
+              <img src="/assets/images/addImage.png" className="w-full" />
+              <img src="/assets/images/addImage.png" className="w-full  " />
+              <img src="/assets/images/addImage.png" className="w-full" />
+            </div>
           </div>
         </div>
       </div>
