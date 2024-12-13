@@ -1,6 +1,10 @@
 "use client";
+
+// import { useRouter } from 'next/router';
+import Link from "next/link";
 import { useState } from "react";
 export default function page() {
+  // const router = useRouter();
   const [activeButton, setActiveButton] = useState("All");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
@@ -426,7 +430,7 @@ export default function page() {
             <button
               className={`px-6 py-2 font-semibold rounded-tl-md ${
                 activeButton === "All"
-                  ? "bg-[#E9E8FF] text-[#7065F0] border-b-2 border-[#7065F0]"
+                  ? "bg-[#E9E8FF] text-[#7065F0] border-2 border-[#7065F0]"
                   : "bg-white text-black border-b-2 border-[#E0DEF7]"
               }`}
               onClick={() => setActiveButton("All")}
@@ -436,7 +440,7 @@ export default function page() {
             <button
               className={`px-6 py-2 font-semibold  ${
                 activeButton === "Residential"
-                  ? "bg-[#E9E8FF] text-[#7065F0] border-b-2 border-[#7065F0]"
+                  ? "bg-[#E9E8FF] text-[#7065F0] border-2 border-[#7065F0]"
                   : "bg-white text-black border-b-2 border-[#E0DEF7]"
               }`}
               onClick={() => setActiveButton("Residential")}
@@ -444,9 +448,9 @@ export default function page() {
               Residential
             </button>
             <button
-              className={`px-6 py-2 font-semibold rounded-tr-md ${
+              className={`px-6 py-2 font-semibold  ${
                 activeButton === "Commercial"
-                  ? "bg-[#E9E8FF] text-[#7065F0] border-b-2 border-[#7065F0]"
+                  ? "bg-[#E9E8FF] text-[#7065F0] border-2 border-[#7065F0]"
                   : "bg-white text-black border-b-2 border-[#E0DEF7] "
               }`}
               onClick={() => setActiveButton("Commercial")}
@@ -454,9 +458,9 @@ export default function page() {
               Commercial
             </button>
             <button
-              className={`px-6 py-2 font-semibold  ${
+              className={`px-6 py-2 font-semibold rounded-tr-md  ${
                 activeButton === "Agriculture"
-                  ? "bg-[#E9E8FF] text-[#7065F0] border-b-2 border-[#7065F0]"
+                  ? "bg-[#E9E8FF] text-[#7065F0] border-2 border-[#7065F0]"
                   : "bg-white text-black border-b-2 border-[#E0DEF7]"
               }`}
               onClick={() => setActiveButton("Agriculture")}
@@ -475,77 +479,82 @@ export default function page() {
           {/* List */}
           <div className="w-full md:w-[calc(100%-292px)] p-2 lg:md:w-[calc(100%-292px)] flex flex-col gap-2 h-full ">
             {data.map((item) => (
-              <div
-                key={item.id}
-                className="w-full bg-white rounded-md flex flex-col  lg:flex-row gap-4 p-2"
-              >
-                <div>
-                  <img
-                    src={item.image}
-                    className="md:w-64 lg:w-64 h-[212px] w-full rounded-md"
-                    alt="property"
-                  />
-                </div>
+          <Link
+          key={item.id} // Add key here for the Link component
+          href={`/rent/${item.id}`} // Dynamic URL path for the product details page
+        >
+                <div
+                 
+                  className="w-full bg-white rounded-md flex flex-col  lg:flex-row gap-4 p-2"
+                 
+                >
+                  <div>
+                    <img
+                      src={item.image}
+                      className="md:w-64 lg:w-64 h-[212px] w-full rounded-md"
+                      alt="property"
+                    />
+                  </div>
 
-                <div className="w-full flex flex-col justify-evenly">
-                  <div className="w-full flex flex-col md:flex-row lg:flex-row items-start justify-between">
-                    <p className="text-[#000929] font-semibold text-[20px]">
-                      {item.title}
-                    </p>
-                    <div className="flex justify-end gap-2 items-center">
-                      <img
-                        src={item.wishlistIcon}
-                        className="h-8 w-8"
-                        alt="wishlist"
-                      />
-                      <img
-                        src={item.shareIcon}
-                        className="h-9 w-9"
-                        alt="share"
-                      />
+                  <div className="w-full flex flex-col justify-evenly">
+                    <div className="w-full flex flex-col md:flex-row lg:flex-row items-start justify-between">
+                      <p className="text-[#000929] font-semibold text-[20px]">
+                        {item.title}
+                      </p>
+                      <div className="flex justify-end gap-2 items-center">
+                        <img
+                          src={item.wishlistIcon}
+                          className="h-8 w-8"
+                          alt="wishlist"
+                        />
+                        <img
+                          src={item.shareIcon}
+                          className="h-9 w-9"
+                          alt="share"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex flex-wrap justify-start items-center gap-2">
-                    <p className="text-[#7065F0] font-bold text-[18px]">
-                      {item.price}
-                    </p>
-                    <p className="font-semibold text-[18px] border-x px-2 text-[#7F8393]">
-                      3 BHK
-                    </p>
-                    <p className="font-semibold text-[18px] text-[#7F8393]">
-                      2200 sqft
-                    </p>
-                  </div>
-                  <p className="flex justify-start items-center gap-2 pt-1 underline">
-                    <span>
-                      <img src={item.locationIcon} alt="location" />
-                    </span>
-                    {item.location}
-                  </p>
-                  <p className="text-[14px] pt-1">{item.description}</p>
-                  <div className="flex justify-start items-center gap-2 pt-1 pb-2 border-b text-[14px] font-semibold flex-wrap">
-                    {item.tags.map((tag, index) => (
-                      <p
-                        key={index}
-                        className="border border-[#7065F0] text-[#7065F0] px-2 py-1 rounded-md flex items-center gap-1"
-                      >
-                        <span>
-                          <img src={tag.icon} alt="tag icon" />
-                        </span>
-                        {tag.label}
-                      </p>
-                    ))}
-                  </div>
-                  <div className="flex flex-col md:flex-row lg:flex-row lg:justify-between md:justify-between pt-1">
                     <div className="flex flex-wrap justify-start items-center gap-2">
-                      <p className="text-[#7F8393]">{item.agentName}</p>
-                      <p className="flex justify-start items-center gap-2 border-x px-2">
-                        <span>
-                          <img src={item.phoneIcon} alt="phone" />
-                        </span>
-                        {item.phone}
+                      <p className="text-[#7065F0] font-bold text-[18px]">
+                        {item.price}
                       </p>
-                      {/* {item.buttons.map((button, index) => (
+                      <p className="font-semibold text-[18px] border-x px-2 text-[#7F8393]">
+                        3 BHK
+                      </p>
+                      <p className="font-semibold text-[18px] text-[#7F8393]">
+                        2200 sqft
+                      </p>
+                    </div>
+                    <p className="flex justify-start items-center gap-2 pt-1 underline">
+                      <span>
+                        <img src={item.locationIcon} alt="location" />
+                      </span>
+                      {item.location}
+                    </p>
+                    <p className="text-[14px] pt-1">{item.description}</p>
+                    <div className="flex justify-start items-center gap-2 pt-1 pb-2 border-b text-[14px] font-semibold flex-wrap">
+                      {item.tags.map((tag, index) => (
+                        <p
+                          key={index}
+                          className="border border-[#7065F0] text-[#7065F0] px-2 py-1 rounded-md flex items-center gap-1"
+                        >
+                          <span>
+                            <img src={tag.icon} alt="tag icon" />
+                          </span>
+                          {tag.label}
+                        </p>
+                      ))}
+                    </div>
+                    <div className="flex flex-col md:flex-row lg:flex-row lg:justify-between md:justify-between pt-1">
+                      <div className="flex flex-wrap justify-start items-center gap-2">
+                        <p className="text-[#7F8393]">{item.agentName}</p>
+                        <p className="flex justify-start items-center gap-2 border-x px-2">
+                          <span>
+                            <img src={item.phoneIcon} alt="phone" />
+                          </span>
+                          {item.phone}
+                        </p>
+                        {/* {item.buttons.map((button, index) => (
                         <p
                           key={index}
                           className="flex justify-start items-center gap-2 px-2 py-1 rounded-md"
@@ -560,36 +569,39 @@ export default function page() {
                           {button.label}
                         </p>
                       ))} */}
-                      {item.buttons.map((button, index) => (
-                        <p
-                          key={index}
-                          className="flex justify-start items-center gap-2 px-2 py-1 rounded-md"
-                          style={{
-                            backgroundColor: button.background,
-                            color: button.color,
-                          }}
-                          onClick={() => {
-                            if (button.label.toLowerCase() === "whatsapp") {
-                              const phoneNumber = "9588205114"; // Replace with desired number
-                              const message = "Hello! I want to connect."; // Customize message
-                              const url = `https://wa.me/${item.phone}?text=${encodeURIComponent(
-                                message
-                              )}`;
-                              window.open(url, "_blank");
-                            }
-                          }}
-                        >
-                          <span>
-                            <img src={button.icon} alt={button.label} />
-                          </span>
-                          {button.label}
-                        </p>
-                      ))}
+                        {item.buttons.map((button, index) => (
+                          <p
+                            key={index}
+                            className="flex justify-start items-center gap-2 px-2 py-1 rounded-md"
+                            style={{
+                              backgroundColor: button.background,
+                              color: button.color,
+                            }}
+                            onClick={() => {
+                              if (button.label.toLowerCase() === "whatsapp") {
+                                const phoneNumber = "9588205114"; // Replace with desired number
+                                const message = "Hello! I want to connect."; // Customize message
+                                const url = `https://wa.me/${
+                                  item.phone
+                                }?text=${encodeURIComponent(message)}`;
+                                window.open(url, "_blank");
+                              }
+                            }}
+                          >
+                            <span>
+                              <img src={button.icon} alt={button.label} />
+                            </span>
+                            {button.label}
+                          </p>
+                        ))}
+                      </div>
+                      <p className="text-[14px] text-[#000929]">
+                        {item.posted}
+                      </p>
                     </div>
-                    <p className="text-[14px] text-[#000929]">{item.posted}</p>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
           {/* Banner List */}

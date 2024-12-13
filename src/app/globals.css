@@ -3,6 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /* Set global body dimensions */
 body {
   height: 100vh;
