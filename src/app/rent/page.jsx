@@ -261,171 +261,173 @@ export default function page() {
   return (
     <div className="h-full w-full flex flex-col">
       {/* Filters */}
-      <div className="h-full md:h-[64px] lg:h-[64px] flex-wrap  bg-[#7065F0] flex gap-2 px-4 py-2 items-center justify-start">
-        <div
-          className="h-[38px] w-40  flex flex-col items-center justify-center px-2 py-2 bg-white  rounded-md relative"
-          style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
-        >
-          <div className="w-fit flex">
-            <input
-              className="outline-none w-[70%] flex-1 text-[#000929] text-[14px] font-semibold"
-              type="text"
-              placeholder="Location..."
-              value={searchInput}
-              onChange={(e) => {
-                setSearchInput(e.target.value);
-                setIsOpen(true);
-              }}
-            />
-            <img
-              src="/assets/icons/arrowDown.svg"
-              className={`transform transition-transform duration-300 cursor-pointer ${
-                isOpen ? "rotate-180" : "rotate-0"
-              }`}
-              onClick={() => setIsOpen(!isOpen)}
-            />
+      <div className=" h-full md:h-[64px] lg:h-[64px] flex-wrap  bg-[#7065F0] flex gap-2 px-4 py-2 items-center justify-start">
+        <div className="container m-auto flex gap-2 justify-start items-center">
+          <div
+            className="h-[38px] w-40  flex flex-col items-center justify-center px-2 py-2 bg-white  rounded-md relative"
+            style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
+          >
+            <div className="w-fit flex">
+              <input
+                className="outline-none w-[70%] flex-1 text-[#000929] text-[14px] font-semibold"
+                type="text"
+                placeholder="Location..."
+                value={searchInput}
+                onChange={(e) => {
+                  setSearchInput(e.target.value);
+                  setIsOpen(true);
+                }}
+              />
+              <img
+                src="/assets/icons/arrowDown.svg"
+                className={`transform transition-transform duration-300 cursor-pointer ${
+                  isOpen ? "rotate-180" : "rotate-0"
+                }`}
+                onClick={() => setIsOpen(!isOpen)}
+              />
+            </div>
+            {isOpen && filteredOptions.length > 0 && (
+              <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
+                {filteredOptions.map((option, index) => (
+                  <li
+                    key={index}
+                    className="px-2 py-1 hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
+                    onClick={() => handleOptionClick(option)}
+                  >
+                    {option}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
-          {isOpen && filteredOptions.length > 0 && (
-            <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
-              {filteredOptions.map((option, index) => (
-                <li
-                  key={index}
-                  className="px-2 py-1 hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
-                  onClick={() => handleOptionClick(option)}
-                >
-                  {option}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-        <div
-          className="h-[38px] w-40  flex flex-col items-center justify-center gap-1 bg-white p-2 rounded-md relative"
-          style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
-        >
-          <div className="flex items-center">
-            <input
-              className="outline-none w-[70%] flex-1 py-1 text-[#000929] text-[14px] font-semibold"
-              type="text"
-              placeholder="Search Budget"
-              value={budgetSearchInput}
-              onChange={handleBudgetSearchChange}
-            />
-            <img
-              src="/assets/icons/arrowDown.svg"
-              className={`transform transition-transform duration-300 cursor-pointer ${
-                isBudgetOpen ? "rotate-180" : "rotate-0"
-              }`}
-              onClick={() => setIsBudgetOpen(!isBudgetOpen)}
-            />
+          <div
+            className="h-[38px] w-40  flex flex-col items-center justify-center gap-1 bg-white p-2 rounded-md relative"
+            style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
+          >
+            <div className="flex items-center">
+              <input
+                className="outline-none w-[70%] flex-1 py-1 text-[#000929] text-[14px] font-semibold"
+                type="text"
+                placeholder="Search Budget"
+                value={budgetSearchInput}
+                onChange={handleBudgetSearchChange}
+              />
+              <img
+                src="/assets/icons/arrowDown.svg"
+                className={`transform transition-transform duration-300 cursor-pointer ${
+                  isBudgetOpen ? "rotate-180" : "rotate-0"
+                }`}
+                onClick={() => setIsBudgetOpen(!isBudgetOpen)}
+              />
+            </div>
+            {isBudgetOpen && filteredBudgetOptions.length > 0 && (
+              <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
+                {filteredBudgetOptions.map((option, index) => (
+                  <li
+                    key={index}
+                    className={`px-2 py-1 ${
+                      option === "No Results Found"
+                        ? "text-[#a0a0a0] cursor-default"
+                        : "hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
+                    }`}
+                    onClick={() =>
+                      option !== "No Results Found" &&
+                      handleBudgetOptionClick(option)
+                    }
+                  >
+                    {option}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
-          {isBudgetOpen && filteredBudgetOptions.length > 0 && (
-            <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
-              {filteredBudgetOptions.map((option, index) => (
-                <li
-                  key={index}
-                  className={`px-2 py-1 ${
-                    option === "No Results Found"
-                      ? "text-[#a0a0a0] cursor-default"
-                      : "hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
-                  }`}
-                  onClick={() =>
-                    option !== "No Results Found" &&
-                    handleBudgetOptionClick(option)
-                  }
-                >
-                  {option}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-        <div
-          className="h-[38px] w-40  flex flex-col items-center justify-center gap-1 bg-white p-2 rounded-md relative"
-          style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
-        >
-          <div className="flex items-center">
-            <input
-              className="outline-none w-[70%] flex-1 py-1 text-[#000929] text-[14px] font-semibold"
-              type="text"
-              placeholder="Search Budget"
-              value={budgetSearchInput}
-              onChange={handleBudgetSearchChange}
-            />
-            <img
-              src="/assets/icons/arrowDown.svg"
-              className={`transform transition-transform duration-300 cursor-pointer ${
-                isBudgetOpen ? "rotate-180" : "rotate-0"
-              }`}
-              onClick={() => setIsBudgetOpen(!isBudgetOpen)}
-            />
+          <div
+            className="h-[38px] w-40  flex flex-col items-center justify-center gap-1 bg-white p-2 rounded-md relative"
+            style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
+          >
+            <div className="flex items-center">
+              <input
+                className="outline-none w-[70%] flex-1 py-1 text-[#000929] text-[14px] font-semibold"
+                type="text"
+                placeholder="Search Budget"
+                value={budgetSearchInput}
+                onChange={handleBudgetSearchChange}
+              />
+              <img
+                src="/assets/icons/arrowDown.svg"
+                className={`transform transition-transform duration-300 cursor-pointer ${
+                  isBudgetOpen ? "rotate-180" : "rotate-0"
+                }`}
+                onClick={() => setIsBudgetOpen(!isBudgetOpen)}
+              />
+            </div>
+            {isBudgetOpen && filteredBudgetOptions.length > 0 && (
+              <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
+                {filteredBudgetOptions.map((option, index) => (
+                  <li
+                    key={index}
+                    className={`px-2 py-1 ${
+                      option === "No Results Found"
+                        ? "text-[#a0a0a0] cursor-default"
+                        : "hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
+                    }`}
+                    onClick={() =>
+                      option !== "No Results Found" &&
+                      handleBudgetOptionClick(option)
+                    }
+                  >
+                    {option}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
-          {isBudgetOpen && filteredBudgetOptions.length > 0 && (
-            <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
-              {filteredBudgetOptions.map((option, index) => (
-                <li
-                  key={index}
-                  className={`px-2 py-1 ${
-                    option === "No Results Found"
-                      ? "text-[#a0a0a0] cursor-default"
-                      : "hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
-                  }`}
-                  onClick={() =>
-                    option !== "No Results Found" &&
-                    handleBudgetOptionClick(option)
-                  }
-                >
-                  {option}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-        <div
-          className="h-[38px] w-40  flex flex-col items-center justify-center gap-1 bg-white p-2 rounded-md relative"
-          style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
-        >
-          <div className="flex items-center">
-            <input
-              className="outline-none w-[70%] flex-1 py-1 text-[#000929] text-[14px] font-semibold"
-              type="text"
-              placeholder="Search Budget"
-              value={budgetSearchInput}
-              onChange={handleBudgetSearchChange}
-            />
-            <img
-              src="/assets/icons/arrowDown.svg"
-              className={`transform transition-transform duration-300 cursor-pointer ${
-                isBudgetOpen ? "rotate-180" : "rotate-0"
-              }`}
-              onClick={() => setIsBudgetOpen(!isBudgetOpen)}
-            />
+          <div
+            className="h-[38px] w-40  flex flex-col items-center justify-center gap-1 bg-white p-2 rounded-md relative"
+            style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
+          >
+            <div className="flex items-center">
+              <input
+                className="outline-none w-[70%] flex-1 py-1 text-[#000929] text-[14px] font-semibold"
+                type="text"
+                placeholder="Search Budget"
+                value={budgetSearchInput}
+                onChange={handleBudgetSearchChange}
+              />
+              <img
+                src="/assets/icons/arrowDown.svg"
+                className={`transform transition-transform duration-300 cursor-pointer ${
+                  isBudgetOpen ? "rotate-180" : "rotate-0"
+                }`}
+                onClick={() => setIsBudgetOpen(!isBudgetOpen)}
+              />
+            </div>
+            {isBudgetOpen && filteredBudgetOptions.length > 0 && (
+              <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
+                {filteredBudgetOptions.map((option, index) => (
+                  <li
+                    key={index}
+                    className={`px-2 py-1 ${
+                      option === "No Results Found"
+                        ? "text-[#a0a0a0] cursor-default"
+                        : "hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
+                    }`}
+                    onClick={() =>
+                      option !== "No Results Found" &&
+                      handleBudgetOptionClick(option)
+                    }
+                  >
+                    {option}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
-          {isBudgetOpen && filteredBudgetOptions.length > 0 && (
-            <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
-              {filteredBudgetOptions.map((option, index) => (
-                <li
-                  key={index}
-                  className={`px-2 py-1 ${
-                    option === "No Results Found"
-                      ? "text-[#a0a0a0] cursor-default"
-                      : "hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
-                  }`}
-                  onClick={() =>
-                    option !== "No Results Found" &&
-                    handleBudgetOptionClick(option)
-                  }
-                >
-                  {option}
-                </li>
-              ))}
-            </ul>
-          )}
         </div>
       </div>
       {/* Tabs Section */}
-      <div className="h-[calc(100%-68px)]  w-full p-2 overflow-auto">
-        <div className="w-full border-b-2 border-[#E0DEF7] flex justify-between flex-wrap items-center">
+      <div className="container m-auto h-[calc(100%-68px)]  w-full mt-8 overflow-auto">
+        <div className="w-full border-b-2 border-[#E0DEF7] flex justify-between flex-wrap items-center gap-2">
           <div>
             <button
               className={`px-6 py-2 font-semibold rounded-tl-md ${
@@ -475,19 +477,15 @@ export default function page() {
             <img src="/assets/icons/arrowDown.svg" />
           </div>
         </div>
-        <div className="h-[calc(100%-42px)] w-full flex flex-col md:flex-row lg:flex-row gap-2 ">
+        <div className="h-[calc(100%-42px)] w-full flex flex-col md:flex-row lg:flex-row gap-2 pt-4 ">
           {/* List */}
           <div className="w-full md:w-[calc(100%-292px)] p-2 lg:md:w-[calc(100%-292px)] flex flex-col gap-2 h-full ">
             {data.map((item) => (
-          <Link
-          key={item.id} // Add key here for the Link component
-          href={`/rent/${item.id}`} // Dynamic URL path for the product details page
-        >
-                <div
-                 
-                  className="w-full bg-white rounded-md flex flex-col  lg:flex-row gap-4 p-2"
-                 
-                >
+              <Link
+                key={item.id} // Add key here for the Link component
+                href={`/rent/${item.id}`} // Dynamic URL path for the product details page
+              >
+                <div className="w-full bg-white rounded-md flex flex-col  lg:flex-row gap-4 p-2">
                   <div>
                     <img
                       src={item.image}

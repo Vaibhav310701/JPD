@@ -32,7 +32,7 @@ export default function RootLayout({
             <Navbar />
           </div>
           {/* Render the child page content here */}
-          <div className="h-[calc(100%-54px)] w-full bg-[#F7F7FD]">
+          <div className="h-[calc(100%-54px)] w-full bg-[#F7F7FD] ">
             {children}
           </div>
         </div>
