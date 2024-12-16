@@ -1,7 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import LoginModal from "../components/LoginModal";
+import SignInModal from '../components/SigInModal'
+import OtpModal from '../components/OtpModal'
 export default function Home() {
   const [location, setLocation] = useState("");
 
@@ -26,6 +28,13 @@ export default function Home() {
           backgroundPosition: "center",
         }}
       ></div>
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-20">
+        <div className="h-full w-full  md:h-[500px] lg:h-[500px] md:w-[400px] lg:w-[400px] bg-white border rounded-lg">
+          {/* <LoginModal /> */}
+          <SignInModal />
+          {/* <OtpModal /> */}
+        </div>
+      </div>
       {/* Left Content */}
       <div className="h-3/4  lg:h-full w-full flex justify-center items-center pt-6 z-10">
         <div className="flex flex-col items-center md:items-center lg:items-start gap-6 w-[80%] lg:w-[75%] md:[85%] m-auto">
@@ -90,7 +99,7 @@ export default function Home() {
         </div>
       </div>
       {/* Right Content */}
-      <div className="h-1/4  lg:h-full w-full flex justify-center items-end pb-4 z-10">
+      <div className="h-1/4  lg:h-full w-full flex justify-center items-end pb-4 z-10 relative">
         <div
           className="h-[150px] w-[80%] p-6 bg-white flex "
           style={{

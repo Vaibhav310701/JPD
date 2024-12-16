@@ -426,7 +426,7 @@ export default function page() {
         </div>
       </div>
       {/* Tabs Section */}
-      <div className="container m-auto h-[calc(100%-68px)]  w-full mt-8 overflow-auto">
+      <div className="container m-auto h-[calc(100%-68px)]  w-full mt-6 overflow-auto">
         <div className="w-full border-b-2 border-[#E0DEF7] flex justify-between flex-wrap items-center gap-2">
           <div>
             <button
@@ -480,12 +480,13 @@ export default function page() {
         <div className="h-[calc(100%-42px)] w-full flex flex-col md:flex-row lg:flex-row gap-2 pt-4 ">
           {/* List */}
           <div className="w-full md:w-[calc(100%-292px)] p-2 lg:md:w-[calc(100%-292px)] flex flex-col gap-2 h-full ">
+            <p className="text-[#7F8393] text-[14px]">Total 245 Results</p>
             {data.map((item) => (
               <Link
                 key={item.id} // Add key here for the Link component
                 href={`/rent/${item.id}`} // Dynamic URL path for the product details page
               >
-                <div className="w-full bg-white rounded-md flex flex-col  lg:flex-row gap-4 p-2">
+                <div className="w-full bg-white border border-[#E0DEF7] rounded-md flex flex-col  lg:flex-row gap-4 p-2">
                   <div>
                     <img
                       src={item.image}
@@ -552,21 +553,6 @@ export default function page() {
                           </span>
                           {item.phone}
                         </p>
-                        {/* {item.buttons.map((button, index) => (
-                        <p
-                          key={index}
-                          className="flex justify-start items-center gap-2 px-2 py-1 rounded-md"
-                          style={{
-                            backgroundColor: button.background,
-                            color: button.color,
-                          }}
-                        >
-                          <span>
-                            <img src={button.icon} alt={button.label} />
-                          </span>
-                          {button.label}
-                        </p>
-                      ))} */}
                         {item.buttons.map((button, index) => (
                           <p
                             key={index}
@@ -575,13 +561,14 @@ export default function page() {
                               backgroundColor: button.background,
                               color: button.color,
                             }}
-                            onClick={() => {
+                            onClick={(event) => {
+                              event.stopPropagation(); // Prevent Link navigation
                               if (button.label.toLowerCase() === "whatsapp") {
-                                const phoneNumber = "9588205114"; // Replace with desired number
+                                const phoneNumber = item.phone; // Use the item's phone number
                                 const message = "Hello! I want to connect."; // Customize message
-                                const url = `https://wa.me/${
-                                  item.phone
-                                }?text=${encodeURIComponent(message)}`;
+                                const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+                                  message
+                                )}`;
                                 window.open(url, "_blank");
                               }
                             }}

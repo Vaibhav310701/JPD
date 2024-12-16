@@ -49,7 +49,7 @@ export default function Page() {
         {/* Property Details */}
         <div className="w-full  md:w-[calc(100%-292px)] lg:w-[calc(100%-292px)] border border-[#E0DEF7] rounded-md flex flex-col gap-2 h-fit p-2 md:px-6 lg:px-6 bg-white">
           <div className="flex items-center justify-between border-b border-[#E0DEF7] pb-2"> 
-            <p>Resedential plot for sale at mansarovar, jaipur</p>
+            <p className="font-semibold">Resedential plot for sale at mansarovar, jaipur</p>
             <div className="flex justify-end gap-4 items-center">
                         <img
                           src="/assets/icons/wishlistIcon.svg"
@@ -175,7 +175,7 @@ export default function Page() {
           </div>
           {/* Footer */}
           <div className="pt-4">
-            <p className="text-[#9EA3AE] border-t-2 border-[#E0DEF7] font-medium px-4 pt-2">
+            <p className="text-[#9EA3AE] border-t-2 border-[#E0DEF7] font-medium text-[12px] px-4 pt-2">
               <span className="text-[#F44336] font-semibold">Caution:</span>{" "}
               Always verify property details and user credentials before any
               transaction. This website is a platform for connecting buyers and
