@@ -1,18 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import LoginModal from "../components/LoginModal";
-import SignInModal from "../components/SigInModal";
-import OtpModal from "../components/OtpModal";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
 
 export default function Home() {
-  const isLogin = useSelector((state: RootState) => state.login.isOpen);
-  const isSignin = useSelector((state: RootState) => state.signIn.isSignInOpen); 
-  const verifyOtp = useSelector((state: RootState) => state.verifyModal.isVerifyModalOpen);
-
-  console.log(isLogin);
   const [location, setLocation] = useState("");
 
   const [activeButton, setActiveButton] = useState("Rent");
@@ -36,18 +26,6 @@ export default function Home() {
           backgroundPosition: "center",
         }}
       ></div>
-      <>
-        {(isLogin || isSignin || verifyOtp) && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-20">
-            <div className="h-full w-full md:h-[500px] lg:h-[500px] md:w-[400px] lg:w-[400px] bg-white border rounded-lg">
-              {/* Render modals based on the state */}
-              {isLogin && <LoginModal />}
-              {isSignin && <SignInModal />}
-              {verifyOtp && <OtpModal />}
-            </div>
-          </div>
-        )}
-      </>
 
       {/* Left Content */}
       <div className="h-3/4  lg:h-full w-full flex justify-center items-center pt-6 z-10">
