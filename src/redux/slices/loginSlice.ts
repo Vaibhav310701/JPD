@@ -1,6 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
+// Define the type for the state
+interface LoginState {
+  isOpen: boolean;
+  
+}
+
+const initialState: LoginState = {
   isOpen: false,
 };
 
@@ -14,6 +20,7 @@ const loginSlice = createSlice({
     closeLogin: (state) => {
       state.isOpen = false;
     },
+
   },
 });
 

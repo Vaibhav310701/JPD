@@ -1,9 +1,15 @@
 "use client";
 import { RxCross2 } from "react-icons/rx";
+import { useDispatch } from "react-redux";
+import  { closeVerifyModal } from '../redux/slices/verifyModalSlice'
 export default function OtpModal() {
+  const dispatch = useDispatch()
+  const handleCloseVerifyModal = () =>{
+    dispatch(closeVerifyModal())
+  }
   return (
     <div className="h-full w-full flex flex-col justify-center gap-4 relative">
-         <div className="absolute top-4 right-4 cursor-pointer text-gray-600 hover:text-gray-800">
+         <div onClick={handleCloseVerifyModal} className="absolute top-4 right-4 cursor-pointer text-gray-600 hover:text-gray-800">
                 <RxCross2 size={24} />
               </div>
       <div className="flex flex-col items-center justify-center gap-4">
@@ -15,7 +21,7 @@ export default function OtpModal() {
       </div>
       <div className="w-[80%] mx-auto flex flex-col items-center justify-center gap-4 pt-10">
         <input
-          type="number"
+          type="text"
           placeholder="Enter OTP"
           className="p-2 border border-gray-300 rounded-md w-full"
         />
