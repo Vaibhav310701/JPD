@@ -6,6 +6,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { BsWhatsapp } from "react-icons/bs";
 import { IoCall } from "react-icons/io5";
 export default function Page() {
+  
   const items = [
     {
       image: "/assets/images/office.png",
@@ -48,20 +49,22 @@ export default function Page() {
       <div className="container m-auto h-[calc(100%-64px)] w-full flex flex-col md:flex-row lg:flex-row gap-2 p-2 overflow-auto">
         {/* Property Details */}
         <div className="w-full  md:w-[calc(100%-292px)] lg:w-[calc(100%-292px)] border border-[#E0DEF7] rounded-md flex flex-col gap-2 h-fit p-2 md:px-6 lg:px-6 bg-white">
-          <div className="flex items-center justify-between border-b border-[#E0DEF7] pb-2"> 
-            <p className="font-semibold">Resedential plot for sale at mansarovar, jaipur</p>
+          <div className="flex items-center justify-between border-b border-[#E0DEF7] pb-2">
+            <p className="font-semibold">
+              Resedential plot for sale at mansarovar, jaipur
+            </p>
             <div className="flex justify-end gap-4 items-center">
-                        <img
-                          src="/assets/icons/wishlistIcon.svg"
-                          className="h-8 w-8"
-                          alt="wishlist"
-                        />
-                        <img
-                          src="/assets/icons/shareIcon.svg"
-                          className="h-9 w-9"
-                          alt="share"
-                        />
-                      </div>
+              <img
+                src="/assets/icons/wishlistIcon.svg"
+                className="h-8 w-8"
+                alt="wishlist"
+              />
+              <img
+                src="/assets/icons/shareIcon.svg"
+                className="h-9 w-9"
+                alt="share"
+              />
+            </div>
           </div>
           {/* carousel */}
           <div className="w-full pt-2">

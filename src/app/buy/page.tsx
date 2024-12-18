@@ -11,7 +11,7 @@ export default function page() {
   const [searchInput, setSearchInput] = useState("");
   const [isBudgetOpen, setIsBudgetOpen] = useState(false);
   const [selectedBudgetOption, setSelectedBudgetOption] = useState("");
-  const [filteredBudgetOptions, setFilteredBudgetOptions] = useState([]);
+  const [filteredBudgetOptions, setFilteredBudgetOptions] = useState<any[]>([]);
   const [budgetSearchInput, setBudgetSearchInput] = useState("");
 
   const options = [
@@ -231,21 +231,21 @@ export default function page() {
   const filteredOptions = options.filter((option) =>
     option.toLowerCase().includes(searchInput.toLowerCase())
   );
-  const handleOptionClick = (option) => {
+  const handleOptionClick = (option: any) => {
     setSelectedOption(option);
     setSearchInput(option);
     setIsOpen(false);
   };
-  const handleBudgetOptionClick = (option) => {
+  const handleBudgetOptionClick = (option: any) => {
     setSelectedBudgetOption(option);
     setBudgetSearchInput(option);
     setIsBudgetOpen(false);
   };
-  const handleBudgetSearchChange = (e) => {
+  const handleBudgetSearchChange = (e: any) => {
     const value = e.target.value;
     setBudgetSearchInput(value);
 
-    const filteredOptions = budgetOptions.filter((option) =>
+    const filteredOptions: any = budgetOptions.filter((option) =>
       option.toLowerCase().includes(value.toLowerCase())
     );
 
@@ -426,9 +426,9 @@ export default function page() {
         </div>
       </div>
       {/* Tabs Section */}
-      <div className="container m-auto h-[calc(100%-68px)]  w-full mt-6 overflow-auto">
+      <div className="container m-auto h-[calc(100%-68px)]  w-full mt-2  overflow-auto">
         <div className="w-full border-b-2 border-[#E0DEF7] flex justify-between flex-wrap items-center gap-2">
-          <div>
+          <div className="lg:px-4 md:px-4">
             <button
               className={`px-6 py-2 font-semibold rounded-tl-md ${
                 activeButton === "All"
@@ -477,127 +477,131 @@ export default function page() {
             <img src="/assets/icons/arrowDown.svg" />
           </div>
         </div>
-        <div className="h-[calc(100%-42px)] w-full flex flex-col md:flex-row lg:flex-row gap-2 pt-4 ">
-          {/* List */}
-          <div className="w-full md:w-[calc(100%-292px)] p-2 lg:md:w-[calc(100%-292px)] flex flex-col gap-2 h-full ">
-            <p className="text-[#7F8393] text-[14px]">Total 245 Results</p>
-            {data.map((item) => (
-              <Link
-                key={item.id} // Add key here for the Link component
-                href={`/rent/${item.id}`} // Dynamic URL path for the product details page
-              >
-                <div className="w-full bg-white border border-[#E0DEF7] rounded-md flex flex-col  lg:flex-row gap-4 p-2">
-                  <div>
-                    <img
-                      src={item.image}
-                      className="md:w-64 lg:w-64 h-[212px] w-full rounded-md"
-                      alt="property"
-                    />
-                  </div>
+        <div className="h-[calc(100%-42px)] w-full flex flex-col pt-2 ">
+          <div className="h-[40px] w-full lg:px-4">
+            <p className="text-[14px] text-[#7F8393] font-medium">Total 245 results of Buy Type.</p>
+          </div>
+          <div className="h-[(100%-40px)] w-full flex flex-col md:flex-row lg:flex-row gap-2">
+            {/* List */}
+            <div className="w-full md:w-[calc(100%-292px)] p-2 lg:md:w-[calc(100%-292px)] flex flex-col gap-2 h-full ">
+              {data.map((item) => (
+                <Link
+                  key={item.id} // Add key here for the Link component
+                  href={`/rent/${item.id}`} // Dynamic URL path for the product details page
+                >
+                  <div className="w-full bg-white border border-[#E0DEF7] rounded-md flex flex-col  lg:flex-row gap-4 p-2">
+                    <div>
+                      <img
+                        src={item.image}
+                        className="md:w-64 lg:w-64 h-[212px] w-full rounded-md"
+                        alt="property"
+                      />
+                    </div>
 
-                  <div className="w-full flex flex-col justify-evenly">
-                    <div className="w-full flex flex-col md:flex-row lg:flex-row items-start justify-between">
-                      <p className="text-[#000929] font-semibold text-[20px]">
-                        {item.title}
-                      </p>
-                      <div className="flex justify-end gap-2 items-center">
-                        <img
-                          src={item.wishlistIcon}
-                          className="h-8 w-8"
-                          alt="wishlist"
-                        />
-                        <img
-                          src={item.shareIcon}
-                          className="h-9 w-9"
-                          alt="share"
-                        />
+                    <div className="w-full flex flex-col justify-evenly">
+                      <div className="w-full flex flex-col md:flex-row lg:flex-row items-start justify-between">
+                        <p className="text-[#000929] font-semibold text-[20px]">
+                          {item.title}
+                        </p>
+                        <div className="flex justify-end gap-2 items-center">
+                          <img
+                            src={item.wishlistIcon}
+                            className="h-8 w-8"
+                            alt="wishlist"
+                          />
+                          <img
+                            src={item.shareIcon}
+                            className="h-9 w-9"
+                            alt="share"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex flex-wrap justify-start items-center gap-2">
-                      <p className="text-[#7065F0] font-bold text-[18px]">
-                        {item.price}
-                      </p>
-                      <p className="font-semibold text-[18px] border-x px-2 text-[#7F8393]">
-                        3 BHK
-                      </p>
-                      <p className="font-semibold text-[18px] text-[#7F8393]">
-                        2200 sqft
-                      </p>
-                    </div>
-                    <p className="flex justify-start items-center gap-2 pt-1 underline">
-                      <span>
-                        <img src={item.locationIcon} alt="location" />
-                      </span>
-                      {item.location}
-                    </p>
-                    <p className="text-[14px] pt-1">{item.description}</p>
-                    <div className="flex justify-start items-center gap-2 pt-1 pb-2 border-b text-[14px] font-semibold flex-wrap">
-                      {item.tags.map((tag, index) => (
-                        <p
-                          key={index}
-                          className="border border-[#7065F0] text-[#7065F0] px-2 py-1 rounded-md flex items-center gap-1"
-                        >
-                          <span>
-                            <img src={tag.icon} alt="tag icon" />
-                          </span>
-                          {tag.label}
-                        </p>
-                      ))}
-                    </div>
-                    <div className="flex flex-col md:flex-row lg:flex-row lg:justify-between md:justify-between pt-1">
                       <div className="flex flex-wrap justify-start items-center gap-2">
-                        <p className="text-[#7F8393]">{item.agentName}</p>
-                        <p className="flex justify-start items-center gap-2 border-x px-2">
-                          <span>
-                            <img src={item.phoneIcon} alt="phone" />
-                          </span>
-                          {item.phone}
+                        <p className="text-[#7065F0] font-bold text-[18px]">
+                          {item.price}
                         </p>
-                        {item.buttons.map((button, index) => (
+                        <p className="font-semibold text-[18px] border-x px-2 text-[#7F8393]">
+                          3 BHK
+                        </p>
+                        <p className="font-semibold text-[18px] text-[#7F8393]">
+                          2200 sqft
+                        </p>
+                      </div>
+                      <p className="flex justify-start items-center gap-2 pt-1 underline">
+                        <span>
+                          <img src={item.locationIcon} alt="location" />
+                        </span>
+                        {item.location}
+                      </p>
+                      <p className="text-[14px] pt-1">{item.description}</p>
+                      <div className="flex justify-start items-center gap-2 pt-1 pb-2 border-b text-[14px] font-semibold flex-wrap">
+                        {item.tags.map((tag, index) => (
                           <p
                             key={index}
-                            className="flex justify-start items-center gap-2 px-2 py-1 rounded-md"
-                            style={{
-                              backgroundColor: button.background,
-                              color: button.color,
-                            }}
-                            onClick={(event) => {
-                              event.stopPropagation(); // Prevent Link navigation
-                              if (button.label.toLowerCase() === "whatsapp") {
-                                const phoneNumber = item.phone; // Use the item's phone number
-                                const message = "Hello! I want to connect."; // Customize message
-                                const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-                                  message
-                                )}`;
-                                window.open(url, "_blank");
-                              }
-                            }}
+                            className="border border-[#7065F0] text-[#7065F0] px-2 py-1 rounded-md flex items-center gap-1"
                           >
                             <span>
-                              <img src={button.icon} alt={button.label} />
+                              <img src={tag.icon} alt="tag icon" />
                             </span>
-                            {button.label}
+                            {tag.label}
                           </p>
                         ))}
                       </div>
-                      <p className="text-[14px] text-[#000929]">
-                        {item.posted}
-                      </p>
+                      <div className="flex flex-col md:flex-row lg:flex-row lg:justify-between md:justify-between pt-1">
+                        <div className="flex flex-wrap justify-start items-center gap-2">
+                          <p className="text-[#7F8393]">{item.agentName}</p>
+                          <p className="flex justify-start items-center gap-2 border-x px-2">
+                            <span>
+                              <img src={item.phoneIcon} alt="phone" />
+                            </span>
+                            {item.phone}
+                          </p>
+                          {item.buttons.map((button, index) => (
+                            <p
+                              key={index}
+                              className="flex justify-start items-center gap-2 px-2 py-1 rounded-md"
+                              style={{
+                                backgroundColor: button.background,
+                                color: button.color,
+                              }}
+                              onClick={(event) => {
+                                event.stopPropagation(); // Prevent Link navigation
+                                if (button.label.toLowerCase() === "whatsapp") {
+                                  const phoneNumber = item.phone; // Use the item's phone number
+                                  const message = "Hello! I want to connect."; // Customize message
+                                  const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+                                    message
+                                  )}`;
+                                  window.open(url, "_blank");
+                                }
+                              }}
+                            >
+                              <span>
+                                <img src={button.icon} alt={button.label} />
+                              </span>
+                              {button.label}
+                            </p>
+                          ))}
+                        </div>
+                        <p className="text-[14px] text-[#000929]">
+                          {item.posted}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-          {/* Banner List */}
-          <div className="w-full md:w-[300px] lg:w-[300px] h-full pt-2 rounded-md">
-            <div className="h-fit w-full bg-[white] flex flex-col gap-2 p-2 rounded-md">
-              <img src="/assets/images/addImage.png" className="w-full  " />
-              <img src="/assets/images/addImage.png" className="w-full" />
-              <img src="/assets/images/addImage.png" className="w-full" />
-              <img src="/assets/images/addImage.png" className="w-full" />
-              <img src="/assets/images/addImage.png" className="w-full  " />
-              <img src="/assets/images/addImage.png" className="w-full" />
+                </Link>
+              ))}
+            </div>
+            {/* Banner List */}
+            <div className="w-full md:w-[300px] lg:w-[300px] h-full pt-2 rounded-md">
+              <div className="h-fit w-full bg-[white] flex flex-col gap-2 p-2 rounded-md">
+                <img src="/assets/images/addImage.png" className="w-full  " />
+                <img src="/assets/images/addImage.png" className="w-full" />
+                <img src="/assets/images/addImage.png" className="w-full" />
+                <img src="/assets/images/addImage.png" className="w-full" />
+                <img src="/assets/images/addImage.png" className="w-full  " />
+                <img src="/assets/images/addImage.png" className="w-full" />
+              </div>
             </div>
           </div>
         </div>

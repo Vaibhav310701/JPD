@@ -1,18 +1,23 @@
 "use client";
 import { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
+
+// Importing Redux slices and dispatch for state management.
 import { useDispatch } from "react-redux";
 import { closeLogin } from "@/redux/slices/loginSlice";
 import { openVerifyModal } from "@/redux/slices/verifyModalSlice";
-import { toast } from "react-toastify"; // Make sure you import toast for notifications
+
+//import Toaster for Notification.
+import { toast } from "react-toastify"; 
 
 export default function LoginModal() {
+
   const [phone, setPhone] = useState<string>("");
   const dispatch = useDispatch();
 
   const handleLoginClose = () => {
-    dispatch(closeLogin());
-    setPhone("");
+    dispatch(closeLogin()); //close login modal.
+    setPhone("");  //set input to null when close.
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +25,7 @@ export default function LoginModal() {
   };
 
   const handleLoginSubmit = () => {
-    const phoneRegex = /^[6789]\d{9}$/;
+    const phoneRegex = /^[6789]\d{9}$/; // Using regex expression for phone validation.
 
     if (phoneRegex.test(phone)) {
       dispatch(openVerifyModal());
@@ -32,7 +37,7 @@ export default function LoginModal() {
       );
     }
     setPhone("");
-    dispatch(closeLogin());
+    dispatch(closeLogin()); // close login modal after succesfull submit.
   };
 
   return (

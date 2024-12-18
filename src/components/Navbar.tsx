@@ -4,13 +4,19 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useDispatch } from "react-redux";
 import { openLogin } from "@/redux/slices/loginSlice";
 import { openSignIn } from "@/redux/slices/signInSlice";
+import { useRouter } from "next/navigation";
+
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dispatch = useDispatch();
+  const router = useRouter();
+  const handleFormNavigation = () => {
+    // Navigate to the specified page
+    router.push("/listyourproperty");
+  };
 
   const handleOpenLoginModal = () => {
-    
     dispatch(openLogin());
     setIsMenuOpen(!isMenuOpen);
   };
@@ -18,19 +24,25 @@ export default function Navbar() {
     dispatch(openSignIn());
     setIsMenuOpen(!isMenuOpen);
   };
-  const handleDropdown =()=>{
+  const handleDropdown = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+  const handleDefaultNavigation = () =>{
+    router.push("/");
   }
   return (
     <div className="h-full w-full flex justify-between items-center px-4 bg-white shadow-md">
       {/* Logo Section */}
-      <div className="px-4">
+      <div  onClick={handleDefaultNavigation} className="px-4 cursor-pointer">
         <p className="text-xl font-bold">JDP</p>
       </div>
 
       {/* Buttons for large screens */}
       <div className="hidden md:flex justify-end gap-4 items-center pr-2 text-sm lg:text-md font-medium">
-        <button className="bg-[#7065F0] hover:bg-[#5a4cf3] px-2 py-2 text-white rounded-md">
+        <button
+          onClick={handleFormNavigation}
+          className="bg-[#7065F0] hover:bg-[#5a4cf3] px-2 py-2 text-white rounded-md"
+        >
           ListYourSpace
         </button>
         <button

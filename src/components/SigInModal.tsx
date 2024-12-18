@@ -1,10 +1,13 @@
 "use client";
 import { RxCross2 } from "react-icons/rx";
-import { useDispatch } from "react-redux";
-import { closeSignIn } from "../redux/slices/signInSlice";
 import { useState } from "react";
 import { toast } from "react-toastify";
+
+// Using Slices for State Managing. 
+import { useDispatch } from "react-redux";
+import { closeSignIn } from "../redux/slices/signInSlice";
 import { openVerifyModal } from "@/redux/slices/verifyModalSlice";
+import { openLogin } from "@/redux/slices/loginSlice";
 
 export default function SignInModal() {
   const [username, setUsername] = useState("");
@@ -14,25 +17,30 @@ export default function SignInModal() {
 
   // Close modal and reset state
   const handleCloseSignInModal = () => {
-    dispatch(closeSignIn());
-    setUsername("");
+    dispatch(closeSignIn()); //close sign in modal
+    setUsername(""); //set form values to null after closing modal
     setPhone("");
   };
 
-  // Handle input changes with inline validation
+  const handleNavigate = () => {
+    dispatch(closeSignIn()); //close Sign in modal
+    dispatch(openLogin()); //open login modal
+  };
+
+  // Handle input changes for username.
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
   };
-
+ //  Handle input changes for Phone.
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhone(e.target.value);
   };
 
   // Handle form submission
   const handleSubmit = () => {
-    const phoneRegex = /^[6789]\d{9}$/; 
-    const usernameRegex = /^[a-zA-Z]{3,}$/; 
-  
+    const phoneRegex = /^[6789]\d{9}$/;     // Regex validation for phone.
+    const usernameRegex = /^[a-zA-Z]{3,}$/; // Regex validation for username.
+
     // Check if username is empty
     if (!username.trim()) {
       toast.error("Username cannot be empty.");
@@ -40,10 +48,12 @@ export default function SignInModal() {
     }
     // Check if username matches the regex
     if (!usernameRegex.test(username)) {
-      toast.error("Username must contain at least 3 alphabets and no special characters or numbers.");
+      toast.error(
+        "Username must contain at least 3 alphabets and no special characters or numbers."
+      );
       return;
     }
-  
+
     // Check if phone is empty
     if (!phone.trim()) {
       toast.error("Phone number cannot be empty.");
@@ -51,18 +61,19 @@ export default function SignInModal() {
     }
     // Check if phone matches the regex
     if (!phoneRegex.test(phone)) {
-      toast.error("Please enter a valid 10-digit phone number starting with 6-9.");
+      toast.error(
+        "Please enter a valid 10-digit phone number starting with 6-9."
+      );
       return;
     }
-  
+
     // If all validations pass
     toast.success("Account Creating Suncce");
     setUsername("");
     setPhone("");
-    dispatch(closeSignIn());
-    dispatch(openVerifyModal())
+    dispatch(closeSignIn());      // closing sign in modal.
+    dispatch(openVerifyModal());  //open verify modal.
   };
-  
 
   return (
     <div className="h-full w-full flex flex-col justify-center gap-4 relative">
@@ -113,9 +124,12 @@ export default function SignInModal() {
 
         <p>
           Have an account?{" "}
-          <a href="/signup" className="text-[#7065F0] hover:underline">
+          <button
+            onClick={handleNavigate}
+            className="text-[#7065F0] hover:underline"
+          >
             Login
-          </a>
+          </button>
         </p>
       </div>
     </div>

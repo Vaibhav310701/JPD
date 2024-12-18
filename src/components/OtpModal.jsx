@@ -1,17 +1,25 @@
 "use client";
 import { RxCross2 } from "react-icons/rx";
+
+// Importing redux slices or function for state management.
 import { useDispatch } from "react-redux";
-import  { closeVerifyModal } from '../redux/slices/verifyModalSlice'
+import { closeVerifyModal } from "../redux/slices/verifyModalSlice";
+
 export default function OtpModal() {
-  const dispatch = useDispatch()
-  const handleCloseVerifyModal = () =>{
-    dispatch(closeVerifyModal())
-  }
+  const dispatch = useDispatch();
+
+  const handleCloseVerifyModal = () => {
+    dispatch(closeVerifyModal()); //closing verify modal.
+  };
+
   return (
     <div className="h-full w-full flex flex-col justify-center gap-4 relative">
-         <div onClick={handleCloseVerifyModal} className="absolute top-4 right-4 cursor-pointer text-gray-600 hover:text-gray-800">
-                <RxCross2 size={24} />
-              </div>
+      <div
+        onClick={handleCloseVerifyModal}
+        className="absolute top-4 right-4 cursor-pointer text-gray-600 hover:text-gray-800"
+      >
+        <RxCross2 size={24} />
+      </div>
       <div className="flex flex-col items-center justify-center gap-4">
         <img src="assets/icons/LoginIcon.svg" />
         <p className="text-[#000929] text-[24px] font-semibold">Verification</p>

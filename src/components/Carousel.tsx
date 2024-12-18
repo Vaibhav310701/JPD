@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const Carousel = ({ items }) => {
+const Carousel = ({ items }: { items: { image: string; alt: string; title: string; description: string }[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-
+ 
   // Function to go to the next item
   const nextItem = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
