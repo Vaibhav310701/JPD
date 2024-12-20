@@ -15,15 +15,75 @@ import {
 } from "@/redux/slices/resdentialTypeSlice";
 import { useState } from "react";
 
+interface Image {
+  file: File;
+  preview: string;
+}
+
 export default function page() {
   const [lookingTo, setLookingTo] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [residentialType, setResidentialType] = useState("");
+  const [selectedFacing, setSelectedFacing] = useState("");
+  const [selectedApprovals, setSelectedApprovals] = useState([]);
+
+  const handleApprovalSelect = (event: any) => {
+    const value: any = event.target.value;
+    setSelectedApprovals(
+      (prev: any) =>
+        prev.includes(value)
+          ? prev.filter((item: any) => item !== value) // Unselect if already selected
+          : [...prev, value] // Select if not already selected
+    );
+  };
+
+  const handleFacingSelect = (event: any) => {
+    setSelectedFacing(event.target.value);
+  };
 
   const isSelectedOpen = useSelector((state: RootState) => state.selectType);
   const isresdentialType = useSelector(
     (state: RootState) => state.resdentialType
   );
+
+  const [images, setImages] = useState<Image[]>([]);
+  const [selectedPlacing, setSelectedPlacing] = useState("");
+  const [selectedRoad, setSelectedRoad] = useState("");
+
+  const handleRoadSelect = (event: any) => {
+    setSelectedRoad(event.target.value);
+  };
+
+  const handlePlacingSelect = (event: any) => {
+    setSelectedPlacing(event.target.value);
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files) return;
+
+    const fileArray = Array.from(files);
+
+    if (images.length + fileArray.length > 5) {
+      alert("You can upload up to 5 images only.");
+      return;
+    }
+
+    const validImages = fileArray.filter((file) =>
+      file.type.startsWith("image/")
+    );
+
+    const newImages = validImages.map((file) => ({
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+
+    setImages((prevImages) => [...prevImages, ...newImages]);
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -107,30 +167,43 @@ export default function page() {
               <div className="flex flex-col gap-2">
                 <label className="text-[14px] font-medium">Looking to</label>
                 <div className="flex gap-2 justify-start items-center text-[14px]">
-                  <button
-                    onClick={() => {
-                      setLookingTo("Sale");
-                    }}
-                    className={`px-4 py-2 border rounded-md ${
+                  {/* Sale Radio Button */}
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
                       lookingTo === "Sale"
-                        ? "bg-[#CBC7FA] text-[#7065F0] font-semibold"
-                        : "bg-white"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
                     }`}
                   >
+                    <input
+                      type="radio"
+                      name="lookingTo"
+                      value="Sale"
+                      checked={lookingTo === "Sale"}
+                      onChange={() => setLookingTo("Sale")}
+                      className="hidden"
+                    />
                     Sale
-                  </button>
-                  <button
-                    onClick={() => {
-                      setLookingTo("Rent");
-                    }}
-                    className={`px-4 py-2 border rounded-md ${
+                  </label>
+
+                  {/* Rent/Lease Radio Button */}
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
                       lookingTo === "Rent"
-                        ? "bg-[#CBC7FA] text-[#7065F0] font-semibold"
-                        : "bg-white"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
                     }`}
                   >
+                    <input
+                      type="radio"
+                      name="lookingTo"
+                      value="Rent"
+                      checked={lookingTo === "Rent"}
+                      onChange={() => setLookingTo("Rent")}
+                      className="hidden"
+                    />
                     Rent/Lease
-                  </button>
+                  </label>
                 </div>
               </div>
               {/* Type Of Property */}
@@ -141,9 +214,9 @@ export default function page() {
                 <div className="flex gap-2 flex-wrap justify-start items-center text-[14px]">
                   <button
                     onClick={showResidential}
-                    className={`px-4 py-2 border rounded-md ${
+                    className={`px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
                       propertyType === "Residential"
-                        ? "bg-[#CBC7FA] text-[#7065F0] font-semibold"
+                        ? "bg-blue-500 text-white border-blue-500"
                         : "bg-white"
                     }`}
                   >
@@ -151,9 +224,9 @@ export default function page() {
                   </button>
                   <button
                     onClick={showCommercial}
-                    className={`px-4 py-2 border rounded-md ${
+                    className={`px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
                       propertyType === "Commercial"
-                        ? "bg-[#CBC7FA] text-[#7065F0] font-semibold"
+                        ? "bg-blue-500 text-white border-blue-500"
                         : "bg-white"
                     }`}
                   >
@@ -161,9 +234,9 @@ export default function page() {
                   </button>
                   <button
                     onClick={showAgriculture}
-                    className={`px-4 py-2 border rounded-md ${
+                    className={`px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
                       propertyType === "Agriculture"
-                        ? "bg-[#CBC7FA] text-[#7065F0] font-semibold"
+                        ? "bg-blue-500 text-white border-blue-500"
                         : "bg-white"
                     }`}
                   >
@@ -183,30 +256,30 @@ export default function page() {
                       <div className="flex flex-wrap gap-2 justify-start items-center text-[14px]">
                         <button
                           onClick={showFlat}
-                          className={`px-4 py-2 border rounded-md ${
+                          className={`px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
                             residentialType === "Flat"
-                              ? "bg-[#CBC7FA] text-[#7065F0] font-semibold"
-                              : "bg-white"
+                              ? "bg-blue-500 text-white border-blue-500"
+                              : "hover:bg-gray-100"
                           }`}
                         >
                           Flat/Apartment
                         </button>
                         <button
                           onClick={showVilla}
-                          className={`px-4 py-2 border rounded-md ${
+                          className={`px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
                             residentialType === "Villa"
-                              ? "bg-[#CBC7FA] text-[#7065F0] font-semibold"
-                              : "bg-white"
+                              ? "bg-blue-500 text-white border-blue-500"
+                              : "hover:bg-gray-100"
                           }`}
                         >
                           House/Villa
                         </button>
                         <button
                           onClick={showPlot}
-                          className={`px-4 py-2 border rounded-md ${
+                          className={`px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
                             residentialType === "Plot"
-                              ? "bg-[#CBC7FA] text-[#7065F0] font-semibold"
-                              : "bg-white"
+                              ? "bg-blue-500 text-white border-blue-500"
+                              : "hover:bg-gray-100"
                           }`}
                         >
                           Plot/Land
@@ -405,84 +478,448 @@ export default function page() {
               <div className="flex flex-col gap-2 text-[14px]">
                 <label className="text-[14px] font-medium">Approved By</label>
                 <div className="flex flex-wrap gap-2 justify-start items-center text-[14px]">
-                  <button className="px-4 py-2 border rounded-md">JDA</button>
-                  <button className="px-4 py-2 border rounded-md">
+                  {/* JDA Checkbox */}
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedApprovals.includes("JDA")
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      value="JDA"
+                      checked={selectedApprovals.includes("JDA")}
+                      onChange={handleApprovalSelect}
+                      className="hidden"
+                    />
+                    JDA
+                  </label>
+
+                  {/* Society Checkbox */}
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedApprovals.includes("Society")
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      value="Society"
+                      checked={selectedApprovals.includes("Society")}
+                      onChange={handleApprovalSelect}
+                      className="hidden"
+                    />
                     Society
-                  </button>
-                  <button className="px-4 py-2 border rounded-md">RERA</button>
-                  <button className="px-4 py-2 border rounded-md">
+                  </label>
+
+                  {/* RERA Checkbox */}
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedApprovals.includes("RERA")
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      value="RERA"
+                      checked={selectedApprovals.includes("RERA")}
+                      onChange={handleApprovalSelect}
+                      className="hidden"
+                    />
+                    RERA
+                  </label>
+
+                  {/* Panchayat Checkbox */}
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedApprovals.includes("Panchayat")
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      value="Panchayat"
+                      checked={selectedApprovals.includes("Panchayat")}
+                      onChange={handleApprovalSelect}
+                      className="hidden"
+                    />
                     Panchayat
-                  </button>
+                  </label>
+                </div>
+
+                {/* Display Selected Values */}
+                <div className="mt-2">
+                  <strong>Selected Approvals: </strong>
+                  {selectedApprovals.join(", ")}
                 </div>
               </div>
               {/* Facing Section */}
               <div className="flex flex-col gap-2 text-[14px]">
                 <label className="text-[14px] font-medium">Facing</label>
-                <div className="flex  flex-wrap gap-4 text-[14px]">
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                <div className="flex flex-wrap gap-4 text-[14px]">
+                  {/* Custom styled radio buttons using Tailwind */}
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedFacing === "East"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="facing"
+                      value="East"
+                      checked={selectedFacing === "East"}
+                      onChange={handleFacingSelect}
+                      className="hidden"
+                    />
                     East
-                  </button>
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                  </label>
+
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedFacing === "West"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="facing"
+                      value="West"
+                      checked={selectedFacing === "West"}
+                      onChange={handleFacingSelect}
+                      className="hidden"
+                    />
                     West
-                  </button>
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                  </label>
+
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedFacing === "North"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="facing"
+                      value="North"
+                      checked={selectedFacing === "North"}
+                      onChange={handleFacingSelect}
+                      className="hidden"
+                    />
                     North
-                  </button>
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                  </label>
+
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedFacing === "South"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="facing"
+                      value="South"
+                      checked={selectedFacing === "South"}
+                      onChange={handleFacingSelect}
+                      className="hidden"
+                    />
                     South
-                  </button>
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                  </label>
+
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedFacing === "North-East"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="facing"
+                      value="North-East"
+                      checked={selectedFacing === "North-East"}
+                      onChange={handleFacingSelect}
+                      className="hidden"
+                    />
                     North-East
-                  </button>
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                  </label>
+
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedFacing === "North-West"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="facing"
+                      value="North-West"
+                      checked={selectedFacing === "North-West"}
+                      onChange={handleFacingSelect}
+                      className="hidden"
+                    />
                     North-West
-                  </button>
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                  </label>
+
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedFacing === "South-East"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="facing"
+                      value="South-East"
+                      checked={selectedFacing === "South-East"}
+                      onChange={handleFacingSelect}
+                      className="hidden"
+                    />
                     South-East
-                  </button>
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                  </label>
+
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedFacing === "South-West"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="facing"
+                      value="South-West"
+                      checked={selectedFacing === "South-West"}
+                      onChange={handleFacingSelect}
+                      className="hidden"
+                    />
                     South-West
-                  </button>
+                  </label>
                 </div>
               </div>
               {/* Road  */}
               <div className="flex flex-col gap-2 text-[14px]">
                 <label className="text-[14px] font-medium">Road</label>
-                <div className="flex  flex-wrap gap-4 text-[14px]">
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                <div className="flex flex-wrap gap-4 text-[14px]">
+                  {/* Custom styled radio buttons using Tailwind */}
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedRoad === "30ft road"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="road"
+                      value="30ft road"
+                      checked={selectedRoad === "30ft road"}
+                      onChange={handleRoadSelect}
+                      className="hidden"
+                    />
                     30ft road
-                  </button>
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                  </label>
+
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedRoad === "40ft road"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="road"
+                      value="40ft road"
+                      checked={selectedRoad === "40ft road"}
+                      onChange={handleRoadSelect}
+                      className="hidden"
+                    />
                     40ft road
-                  </button>
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                  </label>
+
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedRoad === "60ft road"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="road"
+                      value="60ft road"
+                      checked={selectedRoad === "60ft road"}
+                      onChange={handleRoadSelect}
+                      className="hidden"
+                    />
                     60ft road
-                  </button>
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                  </label>
+
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedRoad === "80ft road"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="road"
+                      value="80ft road"
+                      checked={selectedRoad === "80ft road"}
+                      onChange={handleRoadSelect}
+                      className="hidden"
+                    />
                     80ft road
-                  </button>
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                  </label>
+
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedRoad === "100ft road"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="road"
+                      value="100ft road"
+                      checked={selectedRoad === "100ft road"}
+                      onChange={handleRoadSelect}
+                      className="hidden"
+                    />
                     100ft road
-                  </button>
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                  </label>
+
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedRoad === "200ft road"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="road"
+                      value="200ft road"
+                      checked={selectedRoad === "200ft road"}
+                      onChange={handleRoadSelect}
+                      className="hidden"
+                    />
                     200ft road
-                  </button>
+                  </label>
                 </div>
               </div>
               {/* Property Placing */}
               <div className="flex flex-col gap-2 text-[14px]">
                 <label className="text-[14px] font-medium">Placing</label>
-                <div className="flex  flex-wrap gap-4 text-[14px]">
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                <div className="flex flex-wrap gap-4 text-[14px]">
+                  {/* Custom styled radio buttons using Tailwind */}
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedPlacing === "Corner"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="placing"
+                      value="Corner"
+                      checked={selectedPlacing === "Corner"}
+                      onChange={handlePlacingSelect}
+                      className="hidden"
+                    />
                     Corner
-                  </button>
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                  </label>
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedPlacing === "2nd to corner"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="placing"
+                      value="2nd to corner"
+                      checked={selectedPlacing === "2nd to corner"}
+                      onChange={handlePlacingSelect}
+                      className="hidden"
+                    />
                     2nd to corner
-                  </button>
-                  <button className="px-4 py-2 border rounded-md hover:bg-gray-100 focus:ring-2 focus:ring-blue-500">
+                  </label>
+                  <label
+                    className={`cursor-pointer px-4 py-2 border rounded-md transition-all duration-200 ease-in-out ${
+                      selectedPlacing === "Middle"
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="placing"
+                      value="Middle"
+                      checked={selectedPlacing === "Middle"}
+                      onChange={handlePlacingSelect}
+                      className="hidden"
+                    />
                     Middle
-                  </button>
+                  </label>
                 </div>
+              </div>
+              {/* Images Upload */}
+              <div className="w-full h-auto">
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-100 text-center hover:bg-gray-200 cursor-pointer">
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                    id="imageUpload"
+                  />
+                  <label htmlFor="imageUpload" className="block">
+                    Drag and drop images here or click to upload
+                  </label>
+                  <p className="text-sm text-gray-500">
+                    You can upload up to 5 images
+                  </p>
+                </div>
+
+                <div className="mt-4 grid grid-cols-3 gap-4">
+                  {images.map((image, index) => (
+                    <div key={index} className="relative">
+                      <img
+                        src={image.preview}
+                        alt={`Uploaded preview ${index + 1}`}
+                        className="w-full h-52 object-cover rounded-md"
+                      />
+                      <button
+                        onClick={() => handleRemoveImage(index)}
+                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 text-xs"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Submit Form Or Reset  */}
+              <div className="w-full flex justify-center items-center gap-2 pb-6">
+                <button className="px-4 py-2 border">Reset</button>
+                <button className="px-4 py-2 border">Create Listing</button>
               </div>
             </div>
           </div>
