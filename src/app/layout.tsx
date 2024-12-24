@@ -40,6 +40,7 @@ export default function RootLayout({
             pauseOnFocusLoss
             draggable
             pauseOnHover
+            style={{ marginTop: '20px' }}
           />
           <div className="sm:h-full w-full">
          

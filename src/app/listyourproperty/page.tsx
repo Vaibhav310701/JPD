@@ -30,6 +30,7 @@ import {
   removeImage,
   resetFormData,
 } from "../../redux/slices/formDataSlice";
+import { toast } from "react-toastify";
 
 export default function page() {
   const approvalOptions = ["JDA", "Society", "RERA", "Panchayat"];
@@ -163,9 +164,17 @@ export default function page() {
     dispatch(setApprovalStatus(updatedApprovals));
   };
 
-  const handleSubmitForm = () =>{
-    
-  }
+  const handleSubmitForm = () => {
+    const updatedFormData = {
+      ...formData, // Assuming formData is from Redux or local state
+      images: imageFiles, // Append the imageFiles array
+    };
+
+    console.log(updatedFormData);
+    toast.success("Listing Created Successfully")
+    dispatch(resetFormData());
+    setImageFiles([])
+  };
 
   const router = useRouter();
 
@@ -1573,11 +1582,17 @@ export default function page() {
                 ></textarea>
               </div>
               {/* Submit Form Or Reset  */}
-              <div className="w-full flex justify-center items-center gap-2 pb-6">
-                <button className="px-4 py-2 border border-[#CBC7FA]">
+              <div className="w-full flex  items-center gap-2 pb-6">
+                <button
+                  onClick={() => dispatch(resetFormData())}
+                  className="w-[40%] px-4 py-2 border border-[#CBC7FA]"
+                >
                   Reset
                 </button>
-                <button onClick={handleSubmitForm} className="px-4 py-2 border border-[#CBC7FA] rounded-md bg-[#7065F0] hover:bg-[#5d4ff1] text-white">
+                <button
+                  onClick={handleSubmitForm}
+                  className="flex-1 px-4 py-2 border border-[#CBC7FA] rounded-md bg-[#7065F0] hover:bg-[#5d4ff1] text-white"
+                >
                   Create Listing
                 </button>
               </div>
