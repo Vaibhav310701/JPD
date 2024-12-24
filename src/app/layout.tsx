@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ModalRender from '../components/ModalRender'
+import Loader from "@/components/Loader";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -41,6 +42,7 @@ export default function RootLayout({
             pauseOnHover
           />
           <div className="sm:h-full w-full">
+         
             <div className="h-[54px] w-full border-b border-[#E0DEF7]">
               <Navbar />
             </div>
