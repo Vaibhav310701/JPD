@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function Page() {
+ function Page() {
   const [location, setLocation] = useState("");
 
   const [activeButton, setActiveButton] = useState("Rent");
@@ -118,3 +118,4 @@ export default function Page() {
     </div>
   );
 }
+export default Page;
