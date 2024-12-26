@@ -7,7 +7,7 @@ import { BsWhatsapp } from "react-icons/bs";
 import { IoCall } from "react-icons/io5";
 import { useParams } from "next/navigation";
 
-export default function Page() {
+function Page() {
 
   const params = useParams();
 
@@ -208,3 +208,4 @@ export default function Page() {
     </div>
   );
 }
+export default Page;

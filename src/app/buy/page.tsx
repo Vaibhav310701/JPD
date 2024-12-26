@@ -3,7 +3,7 @@
 // import { useRouter } from 'next/router';
 import Link from "next/link";
 import { useState } from "react";
-export default function Page() {
+ function Page() {
   // const router = useRouter();
   const [activeButton, setActiveButton] = useState<string>("All");
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -643,3 +643,4 @@ export default function Page() {
     </div>
   );
 }
+export default Page;
