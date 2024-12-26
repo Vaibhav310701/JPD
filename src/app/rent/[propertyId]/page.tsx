@@ -10,7 +10,7 @@ import { useParams } from "next/navigation";
 export default function PropertyPage() {
 
   const params = useParams();
-  const propertyId = Number(params.propertyId);
+  const propertyId = params.propertyId;
   
   const items = [
     {
