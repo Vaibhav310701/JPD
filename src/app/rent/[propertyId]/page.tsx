@@ -5,13 +5,13 @@ import Carousel from "../../../components/Carousel";
 import { FaLocationDot } from "react-icons/fa6";
 import { BsWhatsapp } from "react-icons/bs";
 import { IoCall } from "react-icons/io5";
+import { useParams } from "next/navigation";
 
-interface PropertyPageProps {
-  propertyId: number;
-}
+export default function PropertyPage() {
 
-export default function PropertyPage({propertyId} : PropertyPageProps) {
-
+  const params = useParams();
+  const propertyId = Number(params.propertyId);
+  
   const items = [
     {
       image: "/assets/images/office.png",

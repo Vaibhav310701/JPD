@@ -3,7 +3,8 @@
 // import { useRouter } from 'next/router';
 import Link from "next/link";
 import { useState } from "react";
-export  function Rent() {
+
+function Page() {
   // const router = useRouter();
   const [activeButton, setActiveButton] = useState<string>("All");
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -256,9 +257,9 @@ export  function Rent() {
   const filteredOptions: string[] = options.filter((option) =>
     option.toLowerCase().includes(searchInput.toLowerCase())
   );
-  
-  console.log(selectedOption)
-  console.log(selectedBudgetOption)
+
+  console.log(selectedOption);
+  console.log(selectedBudgetOption);
   const handleOptionClick = (option: string): void => {
     setSelectedOption(option);
     setSearchInput(option);
@@ -643,4 +644,4 @@ export  function Rent() {
     </div>
   );
 }
-export default  Rent;
+export default Page;

@@ -5,8 +5,14 @@ import Carousel from "../../../components/Carousel";
 import { FaLocationDot } from "react-icons/fa6";
 import { BsWhatsapp } from "react-icons/bs";
 import { IoCall } from "react-icons/io5";
+import { useParams } from "next/navigation";
 
-export default function Page({propertyId}) {
+export default function Page() {
+
+  const params = useParams();
+
+  // Ensure propertyId is a number
+  const propertyId = Number(params.propertyId);
   
   const items = [
     {
