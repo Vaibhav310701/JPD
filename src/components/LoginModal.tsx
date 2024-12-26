@@ -5,7 +5,7 @@ import { RxCross2 } from "react-icons/rx";
 // Importing Redux slices and dispatch for state management.
 import { useDispatch } from "react-redux";
 import { closeLogin } from "@/redux/slices/loginSlice";
-import {openSignIn} from '../redux/slices/signInSlice'
+import { openSignIn } from "../redux/slices/signInSlice";
 import { openVerifyModal } from "@/redux/slices/verifyModalSlice";
 import LottiePlayer from "lottie-react";
 import loginAnimation from "../../public/json/loginAnimation.json";
@@ -42,11 +42,10 @@ export default function LoginModal() {
     dispatch(closeLogin()); // close login modal after succesfull submit.
   };
 
-  const handleNavigateToSign = () =>{
+  const handleNavigateToSign = () => {
     dispatch(closeLogin());
- dispatch(openSignIn());
-
-  }
+    dispatch(openSignIn());
+  };
 
   return (
     <div className="h-full w-full flex flex-col justify-center gap-4 relative">
@@ -88,7 +87,10 @@ export default function LoginModal() {
         </button>
         <p>
           Don't have an account?{" "}
-          <button onClick={handleNavigateToSign} className="text-[#7065F0] hover:underline">
+          <button
+            onClick={handleNavigateToSign}
+            className="text-[#7065F0] hover:underline"
+          >
             Sign up
           </button>
         </p>
