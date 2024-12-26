@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function Home() {
+export default function page() {
   const [location, setLocation] = useState("");
 
   const [activeButton, setActiveButton] = useState("Rent");
