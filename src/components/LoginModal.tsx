@@ -86,7 +86,7 @@ export default function LoginModal() {
           Login
         </button>
         <p>
-          Don't have an account?
+          Don&apos;t have an account?
           <button
             onClick={handleNavigateToSign}
             className="text-[#7065F0] hover:underline"
