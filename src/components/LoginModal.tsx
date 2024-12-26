@@ -5,19 +5,20 @@ import { RxCross2 } from "react-icons/rx";
 // Importing Redux slices and dispatch for state management.
 import { useDispatch } from "react-redux";
 import { closeLogin } from "@/redux/slices/loginSlice";
+import {openSignIn} from '../redux/slices/signInSlice'
 import { openVerifyModal } from "@/redux/slices/verifyModalSlice";
-
+import LottiePlayer from "lottie-react";
+import loginAnimation from "../../public/json/loginAnimation.json";
 //import Toaster for Notification.
-import { toast } from "react-toastify"; 
+import toast from "react-hot-toast";
 
 export default function LoginModal() {
-
   const [phone, setPhone] = useState<string>("");
   const dispatch = useDispatch();
 
   const handleLoginClose = () => {
     dispatch(closeLogin()); //close login modal.
-    setPhone("");  //set input to null when close.
+    setPhone(""); //set input to null when close.
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +30,8 @@ export default function LoginModal() {
 
     if (phoneRegex.test(phone)) {
       dispatch(openVerifyModal());
-      toast.info("OTP sent to your Mobile Number.", {});
+      // Display OTP sent success message
+      toast.success("OTP sent to your registered mobile number.");
       console.log("Phone number is valid:", phone);
     } else {
       toast.error(
@@ -40,6 +42,12 @@ export default function LoginModal() {
     dispatch(closeLogin()); // close login modal after succesfull submit.
   };
 
+  const handleNavigateToSign = () =>{
+    dispatch(closeLogin());
+ dispatch(openSignIn());
+
+  }
+
   return (
     <div className="h-full w-full flex flex-col justify-center gap-4 relative">
       <div
@@ -49,7 +57,14 @@ export default function LoginModal() {
         <RxCross2 size={24} />
       </div>
       <div className="flex flex-col items-center justify-center gap-4">
-        <img src="assets/icons/LoginIcon.svg" />
+        {loginAnimation && (
+          <LottiePlayer
+            animationData={loginAnimation}
+            loop={true}
+            autoplay={true}
+            style={{ width: "150px", height: "150px" }}
+          />
+        )}
         <p className="text-[#000929] text-[24px] font-semibold">Login</p>
         <p className="w-[70%] mx-auto text-center text-[#001619B2] text-[14px] font-medium leading-5">
           We will send you a{" "}
@@ -73,9 +88,9 @@ export default function LoginModal() {
         </button>
         <p>
           Don't have an account?{" "}
-          <a href="/signup" className="text-[#7065F0] hover:underline">
+          <button onClick={handleNavigateToSign} className="text-[#7065F0] hover:underline">
             Sign up
-          </a>
+          </button>
         </p>
       </div>
     </div>

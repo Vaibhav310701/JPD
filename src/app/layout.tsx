@@ -5,8 +5,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Providers from "../components/Provider";
 import Navbar from "../components/Navbar";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from "react-hot-toast";
+// import "react-toastify/dist/ReactToastify.css";
 import ModalRender from '../components/ModalRender'
 import Loader from "@/components/Loader";
 
@@ -30,24 +30,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.variable} antialiased`}>
         <Providers>
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            style={{ marginTop: '20px' }}
-          />
+        <Toaster position="top-center" reverseOrder={false} />
           <div className="sm:h-full w-full">
          
             <div className="h-[54px] w-full border-b border-[#E0DEF7]">
               <Navbar />
             </div>
-            <div className="h-[calc(100%-54px)] w-full bg-[#F7F7FD]">
+            <div className="h-[calc(100%-54px)]  w-full bg-[#F7F7FD]">
               {children}
             </div>
           </div>

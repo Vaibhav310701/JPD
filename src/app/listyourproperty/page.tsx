@@ -30,7 +30,7 @@ import {
   removeImage,
   resetFormData,
 } from "../../redux/slices/formDataSlice";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 export default function page() {
   const approvalOptions = ["JDA", "Society", "RERA", "Panchayat"];
