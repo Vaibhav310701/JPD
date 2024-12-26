@@ -263,6 +263,7 @@ function Page() {
         >
           Back to search results
         </p>
+        <p>{propertyId}</p>
       </div>
 
       <div className="container m-auto h-[calc(100%-64px)] w-full flex flex-col md:flex-row lg:flex-row gap-2 p-2 overflow-auto">
