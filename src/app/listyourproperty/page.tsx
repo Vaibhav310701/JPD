@@ -32,7 +32,7 @@ import {
 } from "../../redux/slices/formDataSlice";
 import toast from "react-hot-toast";
 
-export default function Page() {
+ function Page() {
   const approvalOptions = ["JDA", "Society", "RERA", "Panchayat"];
   const dispatch = useDispatch();
   const formData = useSelector((state: RootState) => state.formData);
@@ -1605,3 +1605,4 @@ export default function Page() {
     </div>
   );
 }
+export default Page;
