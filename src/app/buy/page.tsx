@@ -5,16 +5,18 @@ import Link from "next/link";
 import { useState } from "react";
 export default function Page() {
   // const router = useRouter();
-  const [activeButton, setActiveButton] = useState("All");
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
-  const [searchInput, setSearchInput] = useState("");
-  const [isBudgetOpen, setIsBudgetOpen] = useState(false);
-  const [selectedBudgetOption, setSelectedBudgetOption] = useState("");
-  const [filteredBudgetOptions, setFilteredBudgetOptions] = useState<any[]>([]);
-  const [budgetSearchInput, setBudgetSearchInput] = useState("");
+  const [activeButton, setActiveButton] = useState<string>("All");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [searchInput, setSearchInput] = useState<string>("");
+  const [isBudgetOpen, setIsBudgetOpen] = useState<boolean>(false);
+  const [selectedBudgetOption, setSelectedBudgetOption] = useState<string>("");
+  const [filteredBudgetOptions, setFilteredBudgetOptions] = useState<string[]>(
+    []
+  );
+  const [budgetSearchInput, setBudgetSearchInput] = useState<string>("");
 
-  const options = [
+  const options: string[] = [
     "Malviya Nagar",
     "Vaishali Nagar",
     "Jagatpura",
@@ -36,7 +38,7 @@ export default function Page() {
     "Amer",
     "Gopalpura",
   ];
-  const budgetOptions = [
+  const budgetOptions: string[] = [
     "₹10 Lakh",
     "₹20 Lakh",
     "₹30 Lakh",
@@ -56,7 +58,30 @@ export default function Page() {
     "₹4.5 Crore",
     "₹5 Crore",
   ];
-  const data = [
+
+  interface Property {
+    id: number;
+    image: string;
+    title: string;
+    price: string;
+    location: string;
+    description: string;
+    tags: { icon: string; label: string }[];
+    agentName: string;
+    phone: string;
+    buttons: {
+      icon: string;
+      label: string;
+      background: string;
+      color: string;
+    }[];
+    posted: string;
+    wishlistIcon: string;
+    shareIcon: string;
+    locationIcon: string;
+    phoneIcon: string;
+  }
+  const data: Property[] = [
     {
       id: 1,
       image: "/assets/images/home.png",
@@ -228,24 +253,31 @@ export default function Page() {
       phoneIcon: "assets/icons/phoneIcon.svg",
     },
   ];
-  const filteredOptions = options.filter((option) =>
+  const filteredOptions: string[] = options.filter((option) =>
     option.toLowerCase().includes(searchInput.toLowerCase())
   );
-  const handleOptionClick = (option: any) => {
+  
+  console.log(selectedOption)
+  console.log(selectedBudgetOption)
+  const handleOptionClick = (option: string): void => {
     setSelectedOption(option);
     setSearchInput(option);
     setIsOpen(false);
   };
-  const handleBudgetOptionClick = (option: any) => {
+
+  const handleBudgetOptionClick = (option: string): void => {
     setSelectedBudgetOption(option);
     setBudgetSearchInput(option);
     setIsBudgetOpen(false);
   };
-  const handleBudgetSearchChange = (e: any) => {
+
+  const handleBudgetSearchChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     const value = e.target.value;
     setBudgetSearchInput(value);
 
-    const filteredOptions: any = budgetOptions.filter((option) =>
+    const filteredOptions: string[] = budgetOptions.filter((option) =>
       option.toLowerCase().includes(value.toLowerCase())
     );
 
@@ -426,9 +458,9 @@ export default function Page() {
         </div>
       </div>
       {/* Tabs Section */}
-      <div className="container m-auto h-[calc(100%-68px)]  w-full mt-2  overflow-auto">
+      <div className="container m-auto h-[calc(100%-68px)]  w-full mt-2 overflow-auto">
         <div className="w-full border-b-2 border-[#E0DEF7] flex justify-between flex-wrap items-center gap-2">
-          <div className="lg:px-4 md:px-4">
+          <div className="md:px-4 lg:px-4">
             <button
               className={`px-6 py-2 font-semibold rounded-tl-md ${
                 activeButton === "All"
@@ -479,7 +511,9 @@ export default function Page() {
         </div>
         <div className="h-[calc(100%-42px)] w-full flex flex-col pt-2 ">
           <div className="h-[40px] w-full lg:px-4">
-            <p className="text-[14px] text-[#7F8393] font-medium">Total 245 results of Buy Type.</p>
+            <p className="text-[14px] text-[#7F8393] font-medium">
+              Total 245 results of Rent Type.
+            </p>
           </div>
           <div className="h-[(100%-40px)] w-full flex flex-col md:flex-row lg:flex-row gap-2">
             {/* List */}

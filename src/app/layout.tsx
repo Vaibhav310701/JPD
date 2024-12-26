@@ -8,7 +8,7 @@ import Navbar from "../components/Navbar";
 import { Toaster } from "react-hot-toast";
 // import "react-toastify/dist/ReactToastify.css";
 import ModalRender from '../components/ModalRender'
-import Loader from "@/components/Loader";
+
 
 const poppins = Poppins({
   subsets: ["latin"],

@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,7 +32,7 @@ import {
 } from "../../redux/slices/formDataSlice";
 import toast from "react-hot-toast";
 
-export default function page() {
+export default function Page() {
   const approvalOptions = ["JDA", "Society", "RERA", "Panchayat"];
   const dispatch = useDispatch();
   const formData = useSelector((state: RootState) => state.formData);
