@@ -3,9 +3,6 @@
 // import { useRouter } from 'next/router';
 import Link from "next/link";
 import { useState } from "react";
-
-import dynamic from "next/dynamic";
-const Page = dynamic(() => import("./page"), { ssr: false });
 export default function Rent() {
   // const router = useRouter();
   const [activeButton, setActiveButton] = useState<string>("All");

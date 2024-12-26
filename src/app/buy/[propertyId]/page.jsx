@@ -5,7 +5,8 @@ import Carousel from "../../../components/Carousel";
 import { FaLocationDot } from "react-icons/fa6";
 import { BsWhatsapp } from "react-icons/bs";
 import { IoCall } from "react-icons/io5";
-export default function Page() {
+
+export default function Page({propertyId}) {
   
   const items = [
     {
@@ -32,6 +33,7 @@ export default function Page() {
 
   return (
     <div className=" h-full w-full">
+      <p>{propertyId}</p>
       <div className="h-[64px] bg-[#7065F0] flex justify-start items-center gap-4 px-4">
         <MdOutlineKeyboardBackspace
           color="white"

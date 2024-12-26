@@ -5,11 +5,12 @@ import Carousel from "../../../components/Carousel";
 import { FaLocationDot } from "react-icons/fa6";
 import { BsWhatsapp } from "react-icons/bs";
 import { IoCall } from "react-icons/io5";
-import dynamic from "next/dynamic";
 
-const Page = dynamic(() => import("./page"), { ssr: false });
+interface PropertyPageProps {
+  propertyId: number;
+}
 
-export default function PropertyPage() {
+export default function PropertyPage({propertyId} : PropertyPageProps) {
 
   const items = [
     {
@@ -36,6 +37,7 @@ export default function PropertyPage() {
 
   return (
     <div className=" h-full w-full">
+      <p>{propertyId}</p>
       <div className="h-[64px] bg-[#7065F0] flex justify-start items-center gap-4 px-4">
         <MdOutlineKeyboardBackspace
           color="white"
