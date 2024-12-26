@@ -5,8 +5,12 @@ import Carousel from "../../../components/Carousel";
 import { FaLocationDot } from "react-icons/fa6";
 import { BsWhatsapp } from "react-icons/bs";
 import { IoCall } from "react-icons/io5";
-export default function Page() {
-  
+import dynamic from "next/dynamic";
+
+const Page = dynamic(() => import("./page"), { ssr: false });
+
+export default function PropertyPage() {
+
   const items = [
     {
       image: "/assets/images/office.png",
