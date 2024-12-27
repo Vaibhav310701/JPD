@@ -32,7 +32,7 @@ import {
 } from "../../redux/slices/formDataSlice";
 import toast from "react-hot-toast";
 
- function Page() {
+export default function Page() {
   const approvalOptions = ["JDA", "Society", "RERA", "Panchayat"];
   const dispatch = useDispatch();
   const formData = useSelector((state: RootState) => state.formData);
@@ -171,9 +171,9 @@ import toast from "react-hot-toast";
     };
 
     console.log(updatedFormData);
-    toast.success("Listing Created Successfully")
+    toast.success("Listing Created Successfully");
     dispatch(resetFormData());
-    setImageFiles([])
+    setImageFiles([]);
   };
 
   const router = useRouter();
@@ -1513,7 +1513,7 @@ import toast from "react-hot-toast";
                         handlePropertyChange("price", e.target.value);
                       }}
                       placeholder="Enter Amount"
-                      className="w-[300px] px-4 py-2 text-[14px] outline-none   rounded-md "
+                      className="w-[220px] px-4 py-2 text-[14px] outline-none   rounded-md "
                     />
                     <span className="px-4 py-2 text-[14px]   rounded-md bg-white">
                       ₹
@@ -1530,7 +1530,7 @@ import toast from "react-hot-toast";
                         handlePropertyChange("rent_per_month", e.target.value);
                       }}
                       placeholder="Enter Amount"
-                      className="w-[300px] px-4 py-2 text-[14px] outline-none  rounded-md"
+                      className="w-[220px] px-4 py-2 text-[14px] outline-none  rounded-md"
                     />
                     <span className="px-4 py-2 text-[14px]  rounded-md bg-white">
                       ₹
@@ -1539,7 +1539,7 @@ import toast from "react-hot-toast";
                 </div>
               </div>
               {/* Coordinates */}
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-wrap items-center justify-start gap-2">
                 <div className="flex flex-col gap-2">
                   <label className="text-[14px] font-medium">Latitude</label>
                   <input
@@ -1573,7 +1573,7 @@ import toast from "react-hot-toast";
                 </label>
                 <textarea
                   placeholder="Enter Your Description"
-                  className="w-[300px] md:w-[400px] lg:w-[500px] px-4 py-2 text-[14px] outline-none border border-[#CBC7FA] rounded-md focus:ring-2 focus:ring-[#6C63FF] focus:border-[#6C63FF]"
+                  className="w-[250px] md:w-[400px] lg:w-[500px] px-4 py-2 text-[14px] outline-none border border-[#CBC7FA] rounded-md focus:ring-2 focus:ring-[#6C63FF] focus:border-[#6C63FF]"
                   rows={4}
                   value={formData.property_details.description}
                   onChange={(e) => {
@@ -1605,4 +1605,3 @@ import toast from "react-hot-toast";
     </div>
   );
 }
-export default Page;

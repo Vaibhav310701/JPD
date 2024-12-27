@@ -62,7 +62,7 @@ export default function Navbar() {
       <div className="lg:hidden md:hidden flex items-center justify-end gap-4">
         {/* List Your button visible for small screen only. */}
         <div className="lg:hidden md:hidden flex items-center">
-          <button className="bg-[#7065F0] hover:bg-[#5a4cf3] px-2 py-2 text-white rounded-md">
+          <button onClick={handleFormNavigation} className="bg-[#7065F0] hover:bg-[#5a4cf3] px-2 py-2 text-white rounded-md">
             ListYourSpace
           </button>
         </div>

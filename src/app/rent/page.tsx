@@ -295,7 +295,7 @@ function Page() {
     <div className="h-full w-full flex flex-col">
       {/* Filters */}
       <div className=" h-full md:h-[64px] lg:h-[64px] flex-wrap  bg-[#7065F0] flex gap-2 px-4 py-2 items-center justify-start">
-        <div className="container m-auto flex gap-2 justify-start items-center">
+        <div className="container m-auto flex flex-wrap gap-2 justify-start items-center">
           <div
             className="h-[38px] w-40  flex flex-col items-center justify-center px-2 py-2 bg-white  rounded-md relative"
             style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
