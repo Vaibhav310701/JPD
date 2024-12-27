@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import Providers from "../components/Provider";
 import Navbar from "../components/Navbar";
 import { Toaster } from "react-hot-toast";
-// import "react-toastify/dist/ReactToastify.css";
 import ModalRender from '../components/ModalRender'
 
 
