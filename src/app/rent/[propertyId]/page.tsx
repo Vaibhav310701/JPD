@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { useRouter } from "next/navigation"; // Import useRouter from Next.js
 import Carousel from "../../../components/Carousel";
@@ -8,6 +9,12 @@ import { IoCall } from "react-icons/io5";
 import { useParams } from "next/navigation";
 
 export default function PropertyPage() {
+  const [coordinates, setCoordinates] = useState({
+    latitude: 26.83446618945878, // Default latitude
+    longitude:75.77836613313322, // Default longitude
+  });
+
+  const googleMapsUrl = `https://www.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}`;
 
   const params = useParams();
   const propertyId = params.propertyId;
@@ -161,18 +168,11 @@ export default function PropertyPage() {
             </div>
           </div>
           {/* map */}
-          <div className="w-fit h-full">
+          {/* <div className="w-fit h-full">
             <div className="border rounded-lg h-full border-[#E0DEF7] w-fit relative">
               <p className="absolute flex items-center gap-2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center font-semibold text-black z-10 hover:underline cursor-pointer">
                 <span>
                   <FaLocationDot color="red" size={20} />
-                  {/* <img
-                    src="/assets/icons/locationgif.gif" // Replace with the actual path to your GIF
-                    alt="A cool GIF"
-                    width={30} // Set the desired width
-                    height={30} // Set the desired height
-                    unoptimized
-                  /> */}
                 </span>
                 View On Map
               </p>
@@ -181,7 +181,33 @@ export default function PropertyPage() {
                 className="h-[200px] md:h-[400px] lg:h-[400px] w-[600px] opacity-35"
               />
             </div>
-          </div>
+          </div> */}
+              <div>
+      <div className="mt-4">
+        <iframe
+          src={`${googleMapsUrl}&z=15&output=embed`}
+          width="100%"
+          height="450"
+          style={{ border: 0 }}
+         
+          loading="lazy"
+          title="Google Maps"
+        ></iframe>
+      </div>
+      <p className="flex justify-start items-center gap-2 pt-2">
+        <span>
+          <img src="\assets\icons\locationIcon.svg" alt="location" />
+        </span>
+        <a
+          href={googleMapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-500 underline"
+        >
+          View on Google Maps
+        </a>
+      </p>
+    </div>
           {/* Footer */}
           <div className="pt-4">
             <p className="text-[#9EA3AE] border-t-2 border-[#E0DEF7] font-medium text-[12px] px-4 pt-2">
