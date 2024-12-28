@@ -5,15 +5,20 @@ import { useDispatch } from "react-redux";
 import { openLogin } from "@/redux/slices/loginSlice";
 import { openSignIn } from "@/redux/slices/signInSlice";
 import { useRouter } from "next/navigation";
-
+import { setLoadingForThreeSeconds } from '../redux/slices/loader'
+import { AppDispatch } from "@/redux/store";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dispatch = useDispatch();
+ 
+  const appDispatch = useDispatch<AppDispatch>();
+
   const router = useRouter();
   const handleFormNavigation = () => {
     // Navigate to the specified page
     router.push("/listyourproperty");
+    appDispatch(setLoadingForThreeSeconds());
   };
 
   const handleOpenLoginModal = () => {
@@ -27,13 +32,13 @@ export default function Navbar() {
   const handleDropdown = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  const handleDefaultNavigation = () =>{
+  const handleDefaultNavigation = () => {
     router.push("/");
-  }
+  };
   return (
     <div className="h-full w-full flex justify-between items-center px-4 bg-white shadow-md">
       {/* Logo Section */}
-      <div  onClick={handleDefaultNavigation} className="px-4 cursor-pointer">
+      <div onClick={handleDefaultNavigation} className="px-4 cursor-pointer">
         <p className="text-xl font-bold">JDP</p>
       </div>
 
@@ -62,7 +67,10 @@ export default function Navbar() {
       <div className="lg:hidden md:hidden flex items-center justify-end gap-4">
         {/* List Your button visible for small screen only. */}
         <div className="lg:hidden md:hidden flex items-center">
-          <button onClick={handleFormNavigation} className="bg-[#7065F0] hover:bg-[#5a4cf3] px-2 py-2 text-white rounded-md">
+          <button
+            onClick={handleFormNavigation}
+            className="bg-[#7065F0] hover:bg-[#5a4cf3] px-2 py-2 text-white rounded-md"
+          >
             ListYourSpace
           </button>
         </div>

@@ -3,7 +3,6 @@ import { useState } from "react";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { useRouter } from "next/navigation"; // Import useRouter from Next.js
 import Carousel from "../../../components/Carousel";
-import { FaLocationDot } from "react-icons/fa6";
 import { BsWhatsapp } from "react-icons/bs";
 import { IoCall } from "react-icons/io5";
 import { useParams } from "next/navigation";
@@ -11,14 +10,14 @@ import { useParams } from "next/navigation";
 export default function PropertyPage() {
   const [coordinates, setCoordinates] = useState({
     latitude: 26.83446618945878, // Default latitude
-    longitude:75.77836613313322, // Default longitude
+    longitude: 75.77836613313322, // Default longitude
   });
 
   const googleMapsUrl = `https://www.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}`;
 
   const params = useParams();
   const propertyId = params.propertyId;
-  
+
   const items = [
     {
       image: "/assets/images/office.png",
@@ -43,6 +42,7 @@ export default function PropertyPage() {
   const router = useRouter(); // Initialize the router
 
   return (
+    
     <div className=" h-full w-full">
       <p>{propertyId}</p>
       <div className="h-[64px] bg-[#7065F0] flex justify-start items-center gap-4 px-4">
@@ -182,32 +182,31 @@ export default function PropertyPage() {
               />
             </div>
           </div> */}
-              <div>
-      <div className="mt-4">
-        <iframe
-          src={`${googleMapsUrl}&z=15&output=embed`}
-          width="100%"
-          height="450"
-          style={{ border: 0 }}
-         
-          loading="lazy"
-          title="Google Maps"
-        ></iframe>
-      </div>
-      <p className="flex justify-start items-center gap-2 pt-2">
-        <span>
-          <img src="\assets\icons\locationIcon.svg" alt="location" />
-        </span>
-        <a
-          href={googleMapsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-500 underline"
-        >
-          View on Google Maps
-        </a>
-      </p>
-    </div>
+          <div>
+            <div className="mt-4">
+              <iframe
+                src={`${googleMapsUrl}&z=15&output=embed`}
+                width="100%"
+                height="450"
+                style={{ border: 0 }}
+                loading="lazy"
+                title="Google Maps"
+              ></iframe>
+            </div>
+            <p className="flex justify-start items-center gap-2 pt-2">
+              <span>
+                <img src="\assets\icons\locationIcon.svg" alt="location" />
+              </span>
+              <a
+                href={googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 underline"
+              >
+                View on Google Maps
+              </a>
+            </p>
+          </div>
           {/* Footer */}
           <div className="pt-4">
             <p className="text-[#9EA3AE] border-t-2 border-[#E0DEF7] font-medium text-[12px] px-4 pt-2">

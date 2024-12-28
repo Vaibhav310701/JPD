@@ -4,8 +4,7 @@ import "./globals.css";
 import Providers from "../components/Provider";
 import Navbar from "../components/Navbar";
 import { Toaster } from "react-hot-toast";
-import ModalRender from '../components/ModalRender'
-
+import ModalRender from "../components/ModalRender";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,16 +26,18 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.variable} antialiased`}>
         <Providers>
-        <Toaster position="top-center" reverseOrder={false} />
-          <div className="sm:h-full w-full">
-         
-            <div className="h-[54px] w-full border-b border-[#E0DEF7]">
-              <Navbar />
+          <Toaster position="top-center" reverseOrder={false} />
+          <>
+
+            <div className="sm:h-full w-full">
+              <div className="h-[54px] w-full border-b border-[#E0DEF7]">
+                <Navbar />
+              </div>
+              <div className="h-[calc(100%-54px)]  w-full bg-[#F7F7FD]">
+                {children}
+              </div>
             </div>
-            <div className="h-[calc(100%-54px)]  w-full bg-[#F7F7FD]">
-              {children}
-            </div>
-          </div>
+          </>
           {/* Render modals */}
           <ModalRender />
         </Providers>
