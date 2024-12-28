@@ -1,10 +1,16 @@
 "use client";
 
+import Loader from "@/components/Loader";
 // import { useRouter } from 'next/router';
 import Link from "next/link";
 import { useState } from "react";
- function Page() {
-  // const router = useRouter();
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+
+function Page() {
+
+  const loading = useSelector((state: RootState) => state.loader.loading);
+
   const [activeButton, setActiveButton] = useState<string>("All");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string>("");
@@ -253,12 +259,15 @@ import { useState } from "react";
       phoneIcon: "assets/icons/phoneIcon.svg",
     },
   ];
+
   const filteredOptions: string[] = options.filter((option) =>
     option.toLowerCase().includes(searchInput.toLowerCase())
   );
-  
-  console.log(selectedOption)
+ 
   console.log(selectedBudgetOption)
+  console.log(selectedOption)
+  
+
   const handleOptionClick = (option: string): void => {
     setSelectedOption(option);
     setSearchInput(option);
@@ -291,356 +300,371 @@ import { useState } from "react";
   };
 
   return (
-    <div className="h-full w-full flex flex-col">
-      {/* Filters */}
-      <div className=" h-full md:h-[64px] lg:h-[64px] flex-wrap  bg-[#7065F0] flex gap-2 px-4 py-2 items-center justify-start">
-        <div className="container m-auto flex gap-2 justify-start items-center">
-          <div
-            className="h-[38px] w-40  flex flex-col items-center justify-center px-2 py-2 bg-white  rounded-md relative"
-            style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
-          >
-            <div className="w-fit flex">
-              <input
-                className="outline-none w-[70%] flex-1 text-[#000929] text-[14px] font-semibold"
-                type="text"
-                placeholder="Location..."
-                value={searchInput}
-                onChange={(e) => {
-                  setSearchInput(e.target.value);
-                  setIsOpen(true);
-                }}
-              />
-              <img
-                src="/assets/icons/arrowDown.svg"
-                className={`transform transition-transform duration-300 cursor-pointer ${
-                  isOpen ? "rotate-180" : "rotate-0"
-                }`}
-                onClick={() => setIsOpen(!isOpen)}
-              />
-            </div>
-            {isOpen && filteredOptions.length > 0 && (
-              <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
-                {filteredOptions.map((option, index) => (
-                  <li
-                    key={index}
-                    className="px-2 py-1 hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
-                    onClick={() => handleOptionClick(option)}
-                  >
-                    {option}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <div
-            className="h-[38px] w-40  flex flex-col items-center justify-center gap-1 bg-white p-2 rounded-md relative"
-            style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
-          >
-            <div className="flex items-center">
-              <input
-                className="outline-none w-[70%] flex-1 py-1 text-[#000929] text-[14px] font-semibold"
-                type="text"
-                placeholder="Search Budget"
-                value={budgetSearchInput}
-                onChange={handleBudgetSearchChange}
-              />
-              <img
-                src="/assets/icons/arrowDown.svg"
-                className={`transform transition-transform duration-300 cursor-pointer ${
-                  isBudgetOpen ? "rotate-180" : "rotate-0"
-                }`}
-                onClick={() => setIsBudgetOpen(!isBudgetOpen)}
-              />
-            </div>
-            {isBudgetOpen && filteredBudgetOptions.length > 0 && (
-              <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
-                {filteredBudgetOptions.map((option, index) => (
-                  <li
-                    key={index}
-                    className={`px-2 py-1 ${
-                      option === "No Results Found"
-                        ? "text-[#a0a0a0] cursor-default"
-                        : "hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="h-full w-full flex flex-col">
+          {/* Filters */}
+          <div className=" h-full md:h-[64px] lg:h-[64px] flex-wrap  bg-[#7065F0] flex gap-2 px-4 py-2 items-center justify-start">
+            <div className="container m-auto flex gap-2 justify-start items-center">
+              <div
+                className="h-[38px] w-40  flex flex-col items-center justify-center px-2 py-2 bg-white  rounded-md relative"
+                style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
+              >
+                <div className="w-fit flex">
+                  <input
+                    className="outline-none w-[70%] flex-1 text-[#000929] text-[14px] font-semibold"
+                    type="text"
+                    placeholder="Location..."
+                    value={searchInput}
+                    onChange={(e) => {
+                      setSearchInput(e.target.value);
+                      setIsOpen(true);
+                    }}
+                  />
+                  <img
+                    src="/assets/icons/arrowDown.svg"
+                    className={`transform transition-transform duration-300 cursor-pointer ${
+                      isOpen ? "rotate-180" : "rotate-0"
                     }`}
-                    onClick={() =>
-                      option !== "No Results Found" &&
-                      handleBudgetOptionClick(option)
-                    }
-                  >
-                    {option}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <div
-            className="h-[38px] w-40  flex flex-col items-center justify-center gap-1 bg-white p-2 rounded-md relative"
-            style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
-          >
-            <div className="flex items-center">
-              <input
-                className="outline-none w-[70%] flex-1 py-1 text-[#000929] text-[14px] font-semibold"
-                type="text"
-                placeholder="Search Budget"
-                value={budgetSearchInput}
-                onChange={handleBudgetSearchChange}
-              />
-              <img
-                src="/assets/icons/arrowDown.svg"
-                className={`transform transition-transform duration-300 cursor-pointer ${
-                  isBudgetOpen ? "rotate-180" : "rotate-0"
-                }`}
-                onClick={() => setIsBudgetOpen(!isBudgetOpen)}
-              />
-            </div>
-            {isBudgetOpen && filteredBudgetOptions.length > 0 && (
-              <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
-                {filteredBudgetOptions.map((option, index) => (
-                  <li
-                    key={index}
-                    className={`px-2 py-1 ${
-                      option === "No Results Found"
-                        ? "text-[#a0a0a0] cursor-default"
-                        : "hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
+                    onClick={() => setIsOpen(!isOpen)}
+                  />
+                </div>
+                {isOpen && filteredOptions.length > 0 && (
+                  <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
+                    {filteredOptions.map((option, index) => (
+                      <li
+                        key={index}
+                        className="px-2 py-1 hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
+                        onClick={() => handleOptionClick(option)}
+                      >
+                        {option}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              <div
+                className="h-[38px] w-40  flex flex-col items-center justify-center gap-1 bg-white p-2 rounded-md relative"
+                style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
+              >
+                <div className="flex items-center">
+                  <input
+                    className="outline-none w-[70%] flex-1 py-1 text-[#000929] text-[14px] font-semibold"
+                    type="text"
+                    placeholder="Search Budget"
+                    value={budgetSearchInput}
+                    onChange={handleBudgetSearchChange}
+                  />
+                  <img
+                    src="/assets/icons/arrowDown.svg"
+                    className={`transform transition-transform duration-300 cursor-pointer ${
+                      isBudgetOpen ? "rotate-180" : "rotate-0"
                     }`}
-                    onClick={() =>
-                      option !== "No Results Found" &&
-                      handleBudgetOptionClick(option)
-                    }
-                  >
-                    {option}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <div
-            className="h-[38px] w-40  flex flex-col items-center justify-center gap-1 bg-white p-2 rounded-md relative"
-            style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
-          >
-            <div className="flex items-center">
-              <input
-                className="outline-none w-[70%] flex-1 py-1 text-[#000929] text-[14px] font-semibold"
-                type="text"
-                placeholder="Search Budget"
-                value={budgetSearchInput}
-                onChange={handleBudgetSearchChange}
-              />
-              <img
-                src="/assets/icons/arrowDown.svg"
-                className={`transform transition-transform duration-300 cursor-pointer ${
-                  isBudgetOpen ? "rotate-180" : "rotate-0"
-                }`}
-                onClick={() => setIsBudgetOpen(!isBudgetOpen)}
-              />
-            </div>
-            {isBudgetOpen && filteredBudgetOptions.length > 0 && (
-              <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
-                {filteredBudgetOptions.map((option, index) => (
-                  <li
-                    key={index}
-                    className={`px-2 py-1 ${
-                      option === "No Results Found"
-                        ? "text-[#a0a0a0] cursor-default"
-                        : "hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
+                    onClick={() => setIsBudgetOpen(!isBudgetOpen)}
+                  />
+                </div>
+                {isBudgetOpen && filteredBudgetOptions.length > 0 && (
+                  <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
+                    {filteredBudgetOptions.map((option, index) => (
+                      <li
+                        key={index}
+                        className={`px-2 py-1 ${
+                          option === "No Results Found"
+                            ? "text-[#a0a0a0] cursor-default"
+                            : "hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
+                        }`}
+                        onClick={() =>
+                          option !== "No Results Found" &&
+                          handleBudgetOptionClick(option)
+                        }
+                      >
+                        {option}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              <div
+                className="h-[38px] w-40  flex flex-col items-center justify-center gap-1 bg-white p-2 rounded-md relative"
+                style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
+              >
+                <div className="flex items-center">
+                  <input
+                    className="outline-none w-[70%] flex-1 py-1 text-[#000929] text-[14px] font-semibold"
+                    type="text"
+                    placeholder="Search Budget"
+                    value={budgetSearchInput}
+                    onChange={handleBudgetSearchChange}
+                  />
+                  <img
+                    src="/assets/icons/arrowDown.svg"
+                    className={`transform transition-transform duration-300 cursor-pointer ${
+                      isBudgetOpen ? "rotate-180" : "rotate-0"
                     }`}
-                    onClick={() =>
-                      option !== "No Results Found" &&
-                      handleBudgetOptionClick(option)
-                    }
-                  >
-                    {option}
-                  </li>
-                ))}
-              </ul>
-            )}
+                    onClick={() => setIsBudgetOpen(!isBudgetOpen)}
+                  />
+                </div>
+                {isBudgetOpen && filteredBudgetOptions.length > 0 && (
+                  <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
+                    {filteredBudgetOptions.map((option, index) => (
+                      <li
+                        key={index}
+                        className={`px-2 py-1 ${
+                          option === "No Results Found"
+                            ? "text-[#a0a0a0] cursor-default"
+                            : "hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
+                        }`}
+                        onClick={() =>
+                          option !== "No Results Found" &&
+                          handleBudgetOptionClick(option)
+                        }
+                      >
+                        {option}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              <div
+                className="h-[38px] w-40  flex flex-col items-center justify-center gap-1 bg-white p-2 rounded-md relative"
+                style={{ boxShadow: "rgba(0, 0, 0, 0.2) 0px 18px 50px -10px" }}
+              >
+                <div className="flex items-center">
+                  <input
+                    className="outline-none w-[70%] flex-1 py-1 text-[#000929] text-[14px] font-semibold"
+                    type="text"
+                    placeholder="Search Budget"
+                    value={budgetSearchInput}
+                    onChange={handleBudgetSearchChange}
+                  />
+                  <img
+                    src="/assets/icons/arrowDown.svg"
+                    className={`transform transition-transform duration-300 cursor-pointer ${
+                      isBudgetOpen ? "rotate-180" : "rotate-0"
+                    }`}
+                    onClick={() => setIsBudgetOpen(!isBudgetOpen)}
+                  />
+                </div>
+                {isBudgetOpen && filteredBudgetOptions.length > 0 && (
+                  <ul className="absolute top-full left-0 w-full bg-white border border-[#E0DEF7] rounded-md mt-1 h-[300px] transition-opacity duration-300 opacity-100 z-10 overflow-auto">
+                    {filteredBudgetOptions.map((option, index) => (
+                      <li
+                        key={index}
+                        className={`px-2 py-1 ${
+                          option === "No Results Found"
+                            ? "text-[#a0a0a0] cursor-default"
+                            : "hover:bg-[#E0DEF7] text-[#000929] cursor-pointer"
+                        }`}
+                        onClick={() =>
+                          option !== "No Results Found" &&
+                          handleBudgetOptionClick(option)
+                        }
+                      >
+                        {option}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      {/* Tabs Section */}
-      <div className="container m-auto h-[calc(100%-68px)]  w-full mt-2 overflow-auto">
-        <div className="w-full border-b-2 border-[#E0DEF7] flex justify-between flex-wrap items-center gap-2">
-          <div className="md:px-4 lg:px-4">
-            <button
-              className={`px-6 py-2 font-semibold rounded-tl-md ${
-                activeButton === "All"
-                  ? "bg-[#E9E8FF] text-[#7065F0] border-2 border-[#7065F0]"
-                  : "bg-white text-black border-b-2 border-[#E0DEF7]"
-              }`}
-              onClick={() => setActiveButton("All")}
-            >
-              All
-            </button>
-            <button
-              className={`px-6 py-2 font-semibold  ${
-                activeButton === "Residential"
-                  ? "bg-[#E9E8FF] text-[#7065F0] border-2 border-[#7065F0]"
-                  : "bg-white text-black border-b-2 border-[#E0DEF7]"
-              }`}
-              onClick={() => setActiveButton("Residential")}
-            >
-              Residential
-            </button>
-            <button
-              className={`px-6 py-2 font-semibold  ${
-                activeButton === "Commercial"
-                  ? "bg-[#E9E8FF] text-[#7065F0] border-2 border-[#7065F0]"
-                  : "bg-white text-black border-b-2 border-[#E0DEF7] "
-              }`}
-              onClick={() => setActiveButton("Commercial")}
-            >
-              Commercial
-            </button>
-            <button
-              className={`px-6 py-2 font-semibold rounded-tr-md  ${
-                activeButton === "Agriculture"
-                  ? "bg-[#E9E8FF] text-[#7065F0] border-2 border-[#7065F0]"
-                  : "bg-white text-black border-b-2 border-[#E0DEF7]"
-              }`}
-              onClick={() => setActiveButton("Agriculture")}
-            >
-              Agriculture
-            </button>
-          </div>
-          <div className="bg-white px-4 py-2 rounded-t-md flex items-center justify-between gap-6">
-            <p className="flex-1 flex items-center gap-2">
-              Sort : <span>Relevance</span>
-            </p>
-            <img src="/assets/icons/arrowDown.svg" />
-          </div>
-        </div>
-        <div className="h-[calc(100%-42px)] w-full flex flex-col pt-2 ">
-          <div className="h-[40px] w-full lg:px-4">
-            <p className="text-[14px] text-[#7F8393] font-medium">
-              Total 245 results of Rent Type.
-            </p>
-          </div>
-          <div className="h-[(100%-40px)] w-full flex flex-col md:flex-row lg:flex-row gap-2">
-            {/* List */}
-            <div className="w-full md:w-[calc(100%-292px)] p-2 lg:md:w-[calc(100%-292px)] flex flex-col gap-2 h-full ">
-              {data.map((item) => (
-                <Link
-                  key={item.id} // Add key here for the Link component
-                  href={`/rent/${item.id}`} // Dynamic URL path for the product details page
+          {/* Tabs Section */}
+          <div className="container m-auto h-[calc(100%-68px)]  w-full mt-2 overflow-auto">
+            <div className="w-full border-b-2 border-[#E0DEF7] flex justify-between flex-wrap items-center gap-2">
+              <div className="md:px-4 lg:px-4">
+                <button
+                  className={`px-6 py-2 font-semibold rounded-tl-md ${
+                    activeButton === "All"
+                      ? "bg-[#E9E8FF] text-[#7065F0] border-2 border-[#7065F0]"
+                      : "bg-white text-black border-b-2 border-[#E0DEF7]"
+                  }`}
+                  onClick={() => setActiveButton("All")}
                 >
-                  <div className="w-full bg-white border border-[#E0DEF7] rounded-md flex flex-col  lg:flex-row gap-4 p-2">
-                    <div>
-                      <img
-                        src={item.image}
-                        className="md:w-64 lg:w-64 h-[212px] w-full rounded-md"
-                        alt="property"
-                      />
-                    </div>
-
-                    <div className="w-full flex flex-col justify-evenly">
-                      <div className="w-full flex flex-col md:flex-row lg:flex-row items-start justify-between">
-                        <p className="text-[#000929] font-semibold text-[20px]">
-                          {item.title}
-                        </p>
-                        <div className="flex justify-end gap-2 items-center">
-                          <img
-                            src={item.wishlistIcon}
-                            className="h-8 w-8"
-                            alt="wishlist"
-                          />
-                          <img
-                            src={item.shareIcon}
-                            className="h-9 w-9"
-                            alt="share"
-                          />
-                        </div>
-                      </div>
-                      <div className="flex flex-wrap justify-start items-center gap-2">
-                        <p className="text-[#7065F0] font-bold text-[18px]">
-                          {item.price}
-                        </p>
-                        <p className="font-semibold text-[18px] border-x px-2 text-[#7F8393]">
-                          3 BHK
-                        </p>
-                        <p className="font-semibold text-[18px] text-[#7F8393]">
-                          2200 sqft
-                        </p>
-                      </div>
-                      <p className="flex justify-start items-center gap-2 pt-1 underline">
-                        <span>
-                          <img src={item.locationIcon} alt="location" />
-                        </span>
-                        {item.location}
-                      </p>
-                      <p className="text-[14px] pt-1">{item.description}</p>
-                      <div className="flex justify-start items-center gap-2 pt-1 pb-2 border-b text-[14px] font-semibold flex-wrap">
-                        {item.tags.map((tag, index) => (
-                          <p
-                            key={index}
-                            className="border border-[#7065F0] text-[#7065F0] px-2 py-1 rounded-md flex items-center gap-1"
-                          >
-                            <span>
-                              <img src={tag.icon} alt="tag icon" />
-                            </span>
-                            {tag.label}
-                          </p>
-                        ))}
-                      </div>
-                      <div className="flex flex-col md:flex-row lg:flex-row lg:justify-between md:justify-between pt-1">
-                        <div className="flex flex-wrap justify-start items-center gap-2">
-                          <p className="text-[#7F8393]">{item.agentName}</p>
-                          <p className="flex justify-start items-center gap-2 border-x px-2">
-                            <span>
-                              <img src={item.phoneIcon} alt="phone" />
-                            </span>
-                            {item.phone}
-                          </p>
-                          {item.buttons.map((button, index) => (
-                            <p
-                              key={index}
-                              className="flex justify-start items-center gap-2 px-2 py-1 rounded-md"
-                              style={{
-                                backgroundColor: button.background,
-                                color: button.color,
-                              }}
-                              onClick={(event) => {
-                                event.stopPropagation(); // Prevent Link navigation
-                                if (button.label.toLowerCase() === "whatsapp") {
-                                  const phoneNumber = item.phone; // Use the item's phone number
-                                  const message = "Hello! I want to connect."; // Customize message
-                                  const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-                                    message
-                                  )}`;
-                                  window.open(url, "_blank");
-                                }
-                              }}
-                            >
-                              <span>
-                                <img src={button.icon} alt={button.label} />
-                              </span>
-                              {button.label}
-                            </p>
-                          ))}
-                        </div>
-                        <p className="text-[14px] text-[#000929]">
-                          {item.posted}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
+                  All
+                </button>
+                <button
+                  className={`px-6 py-2 font-semibold  ${
+                    activeButton === "Residential"
+                      ? "bg-[#E9E8FF] text-[#7065F0] border-2 border-[#7065F0]"
+                      : "bg-white text-black border-b-2 border-[#E0DEF7]"
+                  }`}
+                  onClick={() => setActiveButton("Residential")}
+                >
+                  Residential
+                </button>
+                <button
+                  className={`px-6 py-2 font-semibold  ${
+                    activeButton === "Commercial"
+                      ? "bg-[#E9E8FF] text-[#7065F0] border-2 border-[#7065F0]"
+                      : "bg-white text-black border-b-2 border-[#E0DEF7] "
+                  }`}
+                  onClick={() => setActiveButton("Commercial")}
+                >
+                  Commercial
+                </button>
+                <button
+                  className={`px-6 py-2 font-semibold rounded-tr-md  ${
+                    activeButton === "Agriculture"
+                      ? "bg-[#E9E8FF] text-[#7065F0] border-2 border-[#7065F0]"
+                      : "bg-white text-black border-b-2 border-[#E0DEF7]"
+                  }`}
+                  onClick={() => setActiveButton("Agriculture")}
+                >
+                  Agriculture
+                </button>
+              </div>
+              <div className="bg-white px-4 py-2 rounded-t-md flex items-center justify-between gap-6">
+                <p className="flex-1 flex items-center gap-2">
+                  Sort : <span>Relevance</span>
+                </p>
+                <img src="/assets/icons/arrowDown.svg" />
+              </div>
             </div>
-            {/* Banner List */}
-            <div className="w-full md:w-[300px] lg:w-[300px] h-full pt-2 rounded-md">
-              <div className="h-fit w-full bg-[white] flex flex-col gap-2 p-2 rounded-md">
-                <img src="/assets/images/addImage.png" className="w-full  " />
-                <img src="/assets/images/addImage.png" className="w-full" />
-                <img src="/assets/images/addImage.png" className="w-full" />
-                <img src="/assets/images/addImage.png" className="w-full" />
-                <img src="/assets/images/addImage.png" className="w-full  " />
-                <img src="/assets/images/addImage.png" className="w-full" />
+            <div className="h-[calc(100%-42px)] w-full flex flex-col pt-2 ">
+              <div className="h-[40px] w-full lg:px-4">
+                <p className="text-[14px] text-[#7F8393] font-medium">
+                  Total 245 results of Rent Type.
+                </p>
+              </div>
+              <div className="h-[(100%-40px)] w-full flex flex-col md:flex-row lg:flex-row gap-2">
+                {/* List */}
+                <div className="w-full md:w-[calc(100%-292px)] p-2 lg:md:w-[calc(100%-292px)] flex flex-col gap-2 h-full ">
+                  {data.map((item) => (
+                    <Link
+                      key={item.id} // Add key here for the Link component
+                      href={`/rent/${item.id}`} // Dynamic URL path for the product details page
+                    >
+                      <div className="w-full bg-white border border-[#E0DEF7] rounded-md flex flex-col  lg:flex-row gap-4 p-2">
+                        <div>
+                          <img
+                            src={item.image}
+                            className="md:w-64 lg:w-64 h-[212px] w-full rounded-md"
+                            alt="property"
+                          />
+                        </div>
+
+                        <div className="w-full flex flex-col justify-evenly">
+                          <div className="w-full flex flex-col md:flex-row lg:flex-row items-start justify-between">
+                            <p className="text-[#000929] font-semibold text-[20px]">
+                              {item.title}
+                            </p>
+                            <div className="flex justify-end gap-2 items-center">
+                              <img
+                                src={item.wishlistIcon}
+                                className="h-8 w-8"
+                                alt="wishlist"
+                              />
+                              <img
+                                src={item.shareIcon}
+                                className="h-9 w-9"
+                                alt="share"
+                              />
+                            </div>
+                          </div>
+                          <div className="flex flex-wrap justify-start items-center gap-2">
+                            <p className="text-[#7065F0] font-bold text-[18px]">
+                              {item.price}
+                            </p>
+                            <p className="font-semibold text-[18px] border-x px-2 text-[#7F8393]">
+                              3 BHK
+                            </p>
+                            <p className="font-semibold text-[18px] text-[#7F8393]">
+                              2200 sqft
+                            </p>
+                          </div>
+                          <p className="flex justify-start items-center gap-2 pt-1 underline">
+                            <span>
+                              <img src={item.locationIcon} alt="location" />
+                            </span>
+                            {item.location}
+                          </p>
+                          <p className="text-[14px] pt-1">{item.description}</p>
+                          <div className="flex justify-start items-center gap-2 pt-1 pb-2 border-b text-[14px] font-semibold flex-wrap">
+                            {item.tags.map((tag, index) => (
+                              <p
+                                key={index}
+                                className="border border-[#7065F0] text-[#7065F0] px-2 py-1 rounded-md flex items-center gap-1"
+                              >
+                                <span>
+                                  <img src={tag.icon} alt="tag icon" />
+                                </span>
+                                {tag.label}
+                              </p>
+                            ))}
+                          </div>
+                          <div className="flex flex-col md:flex-row lg:flex-row lg:justify-between md:justify-between pt-1">
+                            <div className="flex flex-wrap justify-start items-center gap-2">
+                              <p className="text-[#7F8393]">{item.agentName}</p>
+                              <p className="flex justify-start items-center gap-2 border-x px-2">
+                                <span>
+                                  <img src={item.phoneIcon} alt="phone" />
+                                </span>
+                                {item.phone}
+                              </p>
+                              {item.buttons.map((button, index) => (
+                                <p
+                                  key={index}
+                                  className="flex justify-start items-center gap-2 px-2 py-1 rounded-md"
+                                  style={{
+                                    backgroundColor: button.background,
+                                    color: button.color,
+                                  }}
+                                  onClick={(event) => {
+                                    event.stopPropagation(); // Prevent Link navigation
+                                    if (
+                                      button.label.toLowerCase() === "whatsapp"
+                                    ) {
+                                      const phoneNumber = item.phone; // Use the item's phone number
+                                      const message =
+                                        "Hello! I want to connect."; // Customize message
+                                      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+                                        message
+                                      )}`;
+                                      window.open(url, "_blank");
+                                    }
+                                  }}
+                                >
+                                  <span>
+                                    <img src={button.icon} alt={button.label} />
+                                  </span>
+                                  {button.label}
+                                </p>
+                              ))}
+                            </div>
+                            <p className="text-[14px] text-[#000929]">
+                              {item.posted}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+                {/* Banner List */}
+                <div className="w-full md:w-[300px] lg:w-[300px] h-full pt-2 rounded-md">
+                  <div className="h-fit w-full bg-[white] flex flex-col gap-2 p-2 rounded-md">
+                    <img
+                      src="/assets/images/addImage.png"
+                      className="w-full  "
+                    />
+                    <img src="/assets/images/addImage.png" className="w-full" />
+                    <img src="/assets/images/addImage.png" className="w-full" />
+                    <img src="/assets/images/addImage.png" className="w-full" />
+                    <img
+                      src="/assets/images/addImage.png"
+                      className="w-full  "
+                    />
+                    <img src="/assets/images/addImage.png" className="w-full" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 export default Page;

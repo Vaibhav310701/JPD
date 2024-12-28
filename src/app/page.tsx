@@ -1,10 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setLoadingForThreeSeconds } from "@/redux/slices/loader";
+import { AppDispatch } from "@/redux/store";
 
 function Page() {
   const [location, setLocation] = useState("");
-
+  const dispatch = useDispatch<AppDispatch>();
   const [activeButton, setActiveButton] = useState("Rent");
   const router = useRouter();
 
@@ -14,6 +17,7 @@ function Page() {
     } else if (activeButton === "Buy") {
       router.push("/buy");
     }
+    dispatch(setLoadingForThreeSeconds());
   };
   return (
     <div className="h-full bg-gradient-to-b from-[#E0DEF7] to-transparent w-full gap-8 flex flex-col md:flex-col lg:flex-row overflow-auto relative">
