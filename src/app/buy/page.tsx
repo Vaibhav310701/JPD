@@ -537,9 +537,9 @@ function Page() {
                   {data.map((item) => (
                     <Link
                       key={item.id} // Add key here for the Link component
-                      href={`/rent/${item.id}`} // Dynamic URL path for the product details page
+                      href={`/buy/${item.id}`} // Dynamic URL path for the product details page
                     >
-                      <div className="w-full bg-white border border-[#E0DEF7] rounded-md flex flex-col  lg:flex-row gap-4 p-2">
+                      <div onClick={()=>appDispatch(setLoadingForThreeSeconds())} className="w-full bg-white border border-[#E0DEF7] rounded-md flex flex-col  lg:flex-row gap-4 p-2">
                         <div>
                           <img
                             src={item.image}

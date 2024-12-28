@@ -3,11 +3,15 @@
 // import { useRouter } from 'next/router';
 import Link from "next/link";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import Loader from "@/components/Loader";
+import { setLoadingForThreeSeconds } from "@/redux/slices/loader";
+import { AppDispatch } from "../../redux/store";
+
 function Page() {
   // const router = useRouter();
+  const appDispatch = useDispatch<AppDispatch>();
   const loading = useSelector((state: RootState) => state.loader.loading);
   const [activeButton, setActiveButton] = useState<string>("All");
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -98,8 +102,8 @@ function Page() {
         { icon: "assets/icons/ticlIcon.svg", label: "JDA Approved" },
         { icon: "assets/icons/ticlIcon.svg", label: "RERA Reg." },
       ],
-      agentName: "Aanand Mohan",
-      phone: "9274659876",
+      agentName: "Vaibhav Jain",
+      phone: "9145842438",
       buttons: [
         {
           icon: "assets/icons/callIcon.svg",
@@ -132,8 +136,8 @@ function Page() {
         { icon: "assets/icons/ticlIcon.svg", label: "Luxury Property" },
         { icon: "assets/icons/ticlIcon.svg", label: "Fully Furnished" },
       ],
-      agentName: "Rohit Sharma",
-      phone: "9898765432",
+      agentName: "Anshit Thakur",
+      phone: "9166532071",
       buttons: [
         {
           icon: "assets/icons/callIcon.svg",
@@ -531,7 +535,10 @@ function Page() {
                       key={item.id} // Add key here for the Link component
                       href={`/rent/${item.id}`} // Dynamic URL path for the product details page
                     >
-                      <div className="w-full bg-white border border-[#E0DEF7] rounded-md flex flex-col  lg:flex-row gap-4 p-2">
+                      <div
+                        onClick={() => appDispatch(setLoadingForThreeSeconds())}
+                        className="w-full bg-white border border-[#E0DEF7] rounded-md flex flex-col  lg:flex-row gap-4 p-2"
+                      >
                         <div>
                           <img
                             src={item.image}
@@ -598,7 +605,7 @@ function Page() {
                                 </span>
                                 {item.phone}
                               </p>
-                              {item.buttons.map((button, index) => (
+                              {/* {item.buttons.map((button, index) => (
                                 <p
                                   key={index}
                                   className="flex justify-start items-center gap-2 px-2 py-1 rounded-md"
@@ -618,6 +625,55 @@ function Page() {
                                         message
                                       )}`;
                                       window.open(url, "_blank");
+                                    }
+                                  }}
+                                >
+                                  <span>
+                                    <img src={button.icon} alt={button.label} />
+                                  </span>
+                                  {button.label}
+                                </p>
+                              ))} */}
+                              {item.buttons.map((button, index) => (
+                                <p
+                                  key={index}
+                                  className="flex justify-start items-center gap-2 px-2 py-1 rounded-md"
+                                  style={{
+                                    backgroundColor: button.background,
+                                    color: button.color,
+                                  }}
+                                  onClick={(event) => {
+                                    event.stopPropagation(); // Prevent Link navigation
+
+                                    if (
+                                      button.label.toLowerCase() === "whatsapp"
+                                    ) {
+                                      // WhatsApp action
+                                      const phoneNumber = item.phone; // Use the item's phone number
+                                      const message =
+                                        "Hello! I want to connect."; // Customize message
+                                      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+                                        message
+                                      )}`;
+                                      window.open(url, "_blank");
+                                    } else if (
+                                      button.label.toLowerCase() === "call"
+                                    ) {
+                                      // Call action
+                                      const phoneNumber = item.phone;
+                                      if (
+                                        /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(
+                                          navigator.userAgent
+                                        )
+                                      ) {
+                                        // Mobile device detected
+                                        window.location.href = `tel:${phoneNumber}`;
+                                      } else {
+                                        // Non-mobile device
+                                        alert(
+                                          "This feature is only available on mobile devices."
+                                        );
+                                      }
                                     }
                                   }}
                                 >

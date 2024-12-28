@@ -34,6 +34,7 @@ import toast from "react-hot-toast";
 import Loader from "@/components/Loader";
 
 export default function Page() {
+  
   const approvalOptions = ["JDA", "Society", "RERA", "Panchayat"];
   const dispatch = useDispatch();
   const formData = useSelector((state: RootState) => state.formData);

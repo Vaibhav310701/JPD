@@ -39,7 +39,7 @@ export default function Navbar() {
     <div className="h-full w-full flex justify-between items-center px-4 bg-white shadow-md">
       {/* Logo Section */}
       <div onClick={handleDefaultNavigation} className="px-4 cursor-pointer">
-        <p className="text-xl font-bold">JDP</p>
+        <p className="text-xl font-bold">JPD</p>
       </div>
 
       {/* Buttons for large screens */}
