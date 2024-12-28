@@ -8,7 +8,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  reactStrictMode: true, // Enables React strict mode
+  reactStrictMode: false, // Enables React strict mode
   env: {
     CUSTOM_API_URL: "https://api.example.com", // Environment variables
   },
