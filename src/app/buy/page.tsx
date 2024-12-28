@@ -4,12 +4,15 @@ import Loader from "@/components/Loader";
 // import { useRouter } from 'next/router';
 import Link from "next/link";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector , useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
-
+import { setLoadingForThreeSeconds } from "@/redux/slices/loader";
+import { AppDispatch } from "../../redux/store";
 function Page() {
 
   const loading = useSelector((state: RootState) => state.loader.loading);
+
+  const appDispatch = useDispatch<AppDispatch>();
 
   const [activeButton, setActiveButton] = useState<string>("All");
   const [isOpen, setIsOpen] = useState<boolean>(false);
