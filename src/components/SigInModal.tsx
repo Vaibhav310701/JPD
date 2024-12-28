@@ -1,8 +1,9 @@
 "use client";
 import { RxCross2 } from "react-icons/rx";
 import { useState } from "react";
-import { toast } from "react-toastify";
-
+import toast from "react-hot-toast";
+import LottiePlayer from "lottie-react";
+import loginAnimation from "../../public/json/loginAnimation.json";
 // Using Slices for State Managing. 
 import { useDispatch } from "react-redux";
 import { closeSignIn } from "../redux/slices/signInSlice";
@@ -87,7 +88,14 @@ export default function SignInModal() {
 
       {/* Modal Content */}
       <div className="flex flex-col items-center justify-center gap-4">
-        <img src="assets/icons/LoginIcon.svg" alt="Login Icon" />
+      {loginAnimation && (
+          <LottiePlayer
+            animationData={loginAnimation}
+            loop={true}
+            autoplay={true}
+            style={{ width: "150px", height: "150px" }}
+          />
+        )}
         <p className="text-[#000929] text-[24px] font-semibold">Sign up</p>
         <p className="w-[70%] mx-auto text-center text-[#001619B2] text-[14px] font-medium leading-5">
           Please enter your details!
@@ -95,7 +103,7 @@ export default function SignInModal() {
       </div>
 
       {/* Form Section */}
-      <div className="w-[80%] mx-auto flex flex-col items-center justify-center gap-4 pt-10">
+      <div className="w-[80%] mx-auto flex flex-col items-center justify-center gap-4 pt-4">
         {/* Username Input */}
         <input
           type="text"

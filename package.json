@@ -10,19 +10,22 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.0",
+<<<<<<< HEAD
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.7",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.2",
+=======
+    "lottie-react": "^2.4.0",
+>>>>>>> bcef9b9eedaca0d07a55d54214b3888595662c68
     "next": "^15.1.0",
     "next-connect": "^1.0.0",
     "next-redux-wrapper": "^8.1.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.4.1",
     "react-icons": "^5.4.0",
     "react-redux": "^9.2.0",
-    "react-slick": "^0.30.2",
-    "react-toastify": "^11.0.0",
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {

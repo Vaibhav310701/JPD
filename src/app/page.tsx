@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function Home() {
+function Page() {
   const [location, setLocation] = useState("");
 
   const [activeButton, setActiveButton] = useState("Rent");
@@ -38,37 +38,38 @@ export default function Home() {
             A great platform to buy, sell or even rent your properties without
             any commisions.
           </p>
-          <div className="pt-8">
-            <div className="bg-white w-[252px] rounded-md flex">
+          <div className="w-[300px] md:w-[350px] lg:w-[450px]  pt-8">
+            <div className="bg-white w-full h-full rounded-md flex">
               <button
-                className={`w-[126px] p-2 font-semibold rounded-tl-md ${
+                className={`flex-1 p-2 font-semibold rounded-tl-md ${
                   activeButton === "Rent"
                     ? "bg-[#E9E8FF] text-[#7065F0] border-b-2 border-[#7065F0]"
-                    : "bg-white text-black"
+                    : "bg-white text-black border-b-2"
                 }`}
                 onClick={() => setActiveButton("Rent")}
               >
                 Rent
               </button>
               <button
-                className={`w-[126px] p-2 font-semibold rounded-tr-md ${
+                className={`flex-1 p-2 font-semibold rounded-tr-md ${
                   activeButton === "Buy"
                     ? "bg-[#E9E8FF] text-[#7065F0] border-b-2 border-[#7065F0]"
-                    : "bg-white text-black"
+                    : "bg-white text-black border-b-2"
                 }`}
                 onClick={() => setActiveButton("Buy")}
               >
                 Buy
               </button>
             </div>
+
             <div
-              className="w-fit flex flex-col gap-2 bg-white rounded-md items-center md:flex-col lg:flex-row px-4 py-2"
+              className="w-full flex flex-col gap-2 bg-white rounded-md justify-evenly items-center md:flex-col lg:flex-row px-4 Md:px-2 py-2"
               style={{
                 boxShadow:
                   "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px",
               }}
             >
-              <div className="flex w-[220px] flex-col gap-2 ">
+              <div className="flex w-full md:w-full lg:flex-1 flex-col gap-2 ">
                 <label>Location</label>
                 <input
                   className="border-b-2 outline-none border-[#E0DEF7]"
@@ -78,9 +79,9 @@ export default function Home() {
                   onChange={(e) => setLocation(e.target.value)}
                 />
               </div>
-              <div className="">
+              <div className="w-[180px]">
                 <button
-                  className="rounded-md bg-[#7065F0] hover:bg-[#5f52f3] font-semibold px-3 py-2 text-white"
+                  className="w-full rounded-md bg-[#7065F0] hover:bg-[#5f52f3] font-semibold px-3 py-2 text-white"
                   onClick={handleBrowseProperty}
                 >
                   Browse Property
@@ -118,3 +119,4 @@ export default function Home() {
     </div>
   );
 }
+export default Page;
