@@ -34,7 +34,7 @@ function Page() {
       {/* Left Content */}
       <div className="h-3/4  lg:h-full w-full flex justify-center items-center pt-6 z-10">
         <div className="flex flex-col items-center md:items-center lg:items-start gap-6 w-[80%] lg:w-[75%] md:[85%] m-auto">
-          <p className="text-[#000929] text-6xl  text-wrap text-center leading-tight md:text-left lg:text-left font-semibold  ">
+          <p className="text-[#000929] text-5xl md:text-6xl lg:text-6xl  text-wrap text-center sm:leading-tight leading-tight lg:leading-tight md:text-left lg:text-left font-semibold  ">
             Buy, rent or sell <br /> properties in
             <br /> <span className="text-[#F848C7]">Jaipur</span>
           </p>
@@ -98,21 +98,21 @@ function Page() {
       {/* Right Content */}
       <div className="h-1/4  lg:h-full w-full flex justify-center items-end pb-4 z-10 relative">
         <div
-          className="h-[150px] w-[80%] p-6 bg-white flex "
+          className="h-[150px] w-[80%] p-4 bg-white flex "
           style={{
             boxShadow:
               "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px",
           }}
         >
-          <div className="flex-1 text-center flex flex-col justify-center items-center gap-2">
-            <img src="/assets/icons/homeIcon1.svg" />
+          <div className="flex-1 text-center flex flex-col justify-center items-center gap-2 text-[14px]">
+            <img src="/assets/icons/homeIcon1.svg" className="h-10 w-10" />
             <div>
               <p>50k+ renters</p>
               <p>believe in our service</p>
             </div>
           </div>
-          <div className="flex-1 text-center flex flex-col justify-center items-center gap-2">
-            <img src="/assets/icons/homeIcon2.svg" />
+          <div className="flex-1 text-center flex flex-col justify-center items-center gap-2 text-[14px]">
+            <img src="/assets/icons/homeIcon2.svg" className="h-10 w-10" />
             <div>
               <p>10k+ properties</p>
               <p>ready for occupancy</p>
