@@ -4,7 +4,7 @@ import { RxCross2 } from "react-icons/rx";
 
 // Importing Redux slices and dispatch for state management.
 import { useDispatch } from "react-redux";
-import { closeLogin } from "@/redux/slices/loginSlice";
+import { closeLogin, openLogin } from "@/redux/slices/loginSlice";
 import { openSignIn } from "../redux/slices/signInSlice";
 import { openVerifyModal } from "@/redux/slices/verifyModalSlice";
 import LottiePlayer from "lottie-react";
@@ -27,20 +27,23 @@ export default function LoginModal() {
 
   const handleLoginSubmit = () => {
     const phoneRegex = /^[6789]\d{9}$/; // Using regex expression for phone validation.
-
+  
     if (phoneRegex.test(phone)) {
       dispatch(openVerifyModal());
       // Display OTP sent success message
       toast.success("OTP sent to your registered mobile number.");
       console.log("Phone number is valid:", phone);
+      dispatch(closeLogin()); // Close login modal after successful submit.
     } else {
       toast.error(
         "Please enter a valid phone number (starting with 6, 7, 8, or 9 and 10 digits long)."
       );
+      dispatch(openLogin()); // Ensure login modal remains open
     }
-    setPhone("");
-    dispatch(closeLogin()); // close login modal after succesfull submit.
+  
+    setPhone(""); // Clear the phone input regardless of validity
   };
+  
 
   const handleNavigateToSign = () => {
     dispatch(closeLogin());

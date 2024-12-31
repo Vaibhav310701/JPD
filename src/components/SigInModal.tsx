@@ -69,7 +69,7 @@ export default function SignInModal() {
     }
 
     // If all validations pass
-    toast.success("Account Creating Suncce");
+    toast.success("OTP Send To Your Register Mobile Number.");
     setUsername("");
     setPhone("");
     dispatch(closeSignIn());      // closing sign in modal.
